@@ -906,7 +906,7 @@
     }
 
     $(document).ready(function() {
-        // setToken();
+        setToken();
 
         // INIT PROVINSI
         $.each(ids.provinsiId, function(index, val) {
@@ -975,8 +975,8 @@
                         url: `${baseUrlHubla}/apis/data${version}/kelurahan`,
                         delay: 800,
                         beforeSend: function (xhr) {
-                            // xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
-                            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                            xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
+                            //xhr.setRequestHeader('Authorization', `Bearer ${token}`);
                         },
                         data: function(params) {
                             return {
@@ -1011,8 +1011,8 @@
             type: 'GET',
             dataType: 'json',
             beforeSend: function (xhr) {
-                // xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
-                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
+                //xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             },
             data: params
         })
