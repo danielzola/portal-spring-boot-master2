@@ -1,27 +1,19 @@
 package id.go.dephub.hubla.sehati.controller;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import id.go.dephub.hubla.sehati.dao.HomeDao;
+import id.go.dephub.hubla.sehati.dao.UserDao;
+import id.go.dephub.hubla.sehati.service.FilesStorageService;
+import id.go.dephub.hubla.sehati.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import id.go.dephub.hubla.sehati.dao.HomeDao;
-import id.go.dephub.hubla.sehati.dao.UserDao;
-import id.go.dephub.hubla.sehati.service.FilesStorageService;
-import id.go.dephub.hubla.sehati.service.RegisterService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class PublicController {
@@ -142,11 +134,12 @@ public class PublicController {
 		return "public/resetpass";
 	}
 
-	@RequestMapping(value = "/register2", method = {RequestMethod.POST})
+	@RequestMapping(value = "/register", method = {RequestMethod.POST})
 	@ResponseBody
 	public ResponseEntity<String> setRegister(HttpServletRequest request) {
 		String SetRegister = register.SetRegister(request);
 		return new ResponseEntity<>(SetRegister, HttpStatus.OK);
+
 	}
 
 	@RequestMapping(value = "/activate", method = {RequestMethod.POST})
@@ -191,5 +184,4 @@ public class PublicController {
 
         return "public/verifysign";
 	}
-
 }

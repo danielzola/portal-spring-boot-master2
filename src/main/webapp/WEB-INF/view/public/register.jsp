@@ -82,17 +82,27 @@
         content: " * ";
         color: red;
     }
+    label.required::after {
+        content: " * ";
+        color: red;
+    }
     legend {
         font-size: 1.3rem !important;
         font-weight: bold;
         margin-bottom: 25px
+    }
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 37px !important;
     }
 </style>
 
 <body>
 <div class="preloader" style="z-index:99999999 !important;"></div>
 <div class="page-wrapper">
-    <header class="site-header header-one" style="z-index:999999 !important;">
+    <header class="site-header header-one">
         <nav class="navbar navbar-expand-lg navbar-light header-navigation stricky">
             <div class="container clearfix">
                 <div class="logo-box clearfix">
@@ -112,7 +122,7 @@
                             <a href="../portal/">Beranda</a>
                         </li>
                         <li class="scrollToLink">
-                            <a href="../../sehatitest.hubla.dephub.go.id/sso/authenticationendpoint/login_client_id%3Db4mC">Login</a>
+                            <a href="https://sehatitest.hubla.dephub.go.id/sso/authenticationendpoint/login_client_id%3Db4mC">Login</a>
                         </li>
                         <li class="scrollToLink">
                             <a href="../forgotpass/">Lupa Password</a>
@@ -191,8 +201,8 @@
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-     aria-hidden="true" style="z-index: 999999999 !important;" data-backdrop="static">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" style="z-index: 999999999 !important;">
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-body">
                 <h2 class="title-modal">
@@ -200,114 +210,151 @@
                 </h2>
 
                 <form id="regis_manual" method="post" novalidate>
-                    <%--@declare id="inputpemegangsaham"--%><%--@declare id="inputpenanggungjawab"--%><fieldset>
-                    <legend>Data Perusahaan</legend>
+                    <fieldset>
+                        <legend>Data Perusahaan</legend>
 
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group required">
-                                <label for="NamaPerseroan">Nama Perseroan</label>
-                                <input type="text" class="form-control" id="NamaPerseroan" required>
-                                <div class="invalid-feedback"></div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group required">
+                                    <label for="NamaPerseroan">Nama Perseroan</label>
+                                    <input type="text" name="nama_perseroan" class="form-control"
+                                           id="NamaPerseroan" tabindex="1" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="inputNpwp">NPWP Perseroan</label>
+                                    <input type="text" name="npwp_perseroan" class="form-control" id="inputNpwp" tabindex="3" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="inputTglTerbit">Tgl. Terbit NIB</label>
+                                    <input type="text" name="tgl_terbit_nib" class="form-control datepicker"
+                                           id="inputTglTerbit" tabindex="5" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="inputTotalModal">Total Modal Dasar</label>
+                                    <input type="text" name="total_modal_dasar" class="form-control numeric"
+                                           id="inputTotalModal" tabindex="7" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="AlamatPerseroan">Alamat Perseroan</label>
+                                    <textarea class="form-control" id="AlamatPerseroan" name="alamat_perseroan" rows="4"
+                                              style="height:133px" tabindex="9" required></textarea>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="KodeposPerseroan">Kode Pos Perseroan</label>
+                                    <input type="text" class="form-control" name="kode_pos_perseroan"
+                                           id="KodeposPerseroan" tabindex="16" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="NoTelponPerseroan">No. Telepon Perseroan</label>
+                                    <input type="text" class="form-control" name="nomor_telpon_perseroan"
+                                           id="NoTelponPerseroan" tabindex="17" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
                             </div>
 
-                            <div class="form-group required">
-                                <label for="inputNpwp">NPWP Perseroan</label>
-                                <input type="text" class="form-control" id="inputNpwp" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group required">
+                                    <label for="inputNib">NIB</label>
+                                    <input type="text" class="form-control" name="nib"
+                                           id="inputNib" tabindex="2" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
 
-                            <div class="form-group required">
-                                <label for="inputTglTerbit">Tgl. Terbit NIB</label>
-                                <input type="text" class="form-control" id="inputTglTerbit" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                                <div class="form-group required">
+                                    <label for="inputStatus">Status NIB</label>
+                                    <input type="text" class="form-control" name="status_nib"
+                                           id="inputStatus" tabindex="4" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
 
-                            <div class="form-group required">
-                                <label for="inputTotalModal">Total Modal Dasar</label>
-                                <input type="text" class="form-control" id="inputTotalModal" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                                <div class="form-group required">
+                                    <label for="inputTglPerubahan">Tgl. Perubahan NIB</label>
+                                    <input type="text" class="form-control datepicker" name="tgl_perubahan_nib"
+                                           id="inputTglPerubahan" tabindex="6" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
 
-                            <div class="form-group required">
-                                <label for="AlamatPerseroan">Alamat Perseroan</label>
-                                <textarea class="form-control" id="AlamatPerseroan" rows="4" style="height:133px" required></textarea>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                                <div class="form-group required">
+                                    <label for="inputModalTempat">Total modal Ditempatkan</label>
+                                    <input type="text" class="form-control" name="total_modal_ditempatkan"
+                                           id="inputModalTempat" tabindex="8" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
 
-                            <div class="form-group required">
-                                <label for="KecamatanPerseroan">Kecamatan Perseroan</label>
-                                <input type="text" class="form-control" id="KecamatanPerseroan" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group required">
+                                            <label for="RTPerseroan">RT</label>
+                                            <input type="text" name="rt" class="form-control"
+                                                   id="RTPerseroan" tabindex="10" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
 
-                            <div class="form-group required">
-                                <label for="ProvinsiPerseroan">Provinsi Perseroan</label>
-                                <input type="text" class="form-control" id="ProvinsiPerseroan" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group required">
+                                            <label for="RWPerseroan">RW</label>
+                                            <input type="text" name="rw" class="form-control"
+                                                   id="RWPerseroan" tabindex="11" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="form-group required">
-                                <label for="NoTelponPerseroan">No. Telepon Perseroan</label>
-                                <input type="text" class="form-control" id="NoTelponPerseroan" required>
-                                <div class="invalid-feedback"></div>
+                                <div class="form-group required">
+                                    <label for="ProvinsiPerseroan">Provinsi Perseroan</label>
+                                    <select name="provinsi_perseroan" id="ProvinsiPerseroan" class="form-control" tabindex="12" required>
+                                        <option value="">- Pilih Provinsi -</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="KotaKabupaten">Kota/Kabupaten Perseroan</label>
+                                    <select name="kabkota_perseroan" id="KotaKabupaten" class="form-control" tabindex="13" required>
+                                        <option value="">- Pilih Kota/Kabupaten -</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="KecamatanPerseroan">Kecamatan Perseroan</label>
+                                    <select name="kecamatan_perseroan" id="KecamatanPerseroan" class="form-control" tabindex="14" required>
+                                        <option value="">- Pilih Kecamatan -</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+
+                                <div class="form-group required">
+                                    <label for="KelurahanPerseroan">Kelurahan Perseroan</label>
+                                    <select name="kelurahan_perseroan" id="KelurahanPerseroan" class="form-control" tabindex="15" required>
+                                        <option value="">- Pilih Kelurahan -</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
                             </div>
                         </div>
+                    </fieldset>
 
-                        <div class="col-md-6">
-                            <div class="form-group required">
-                                <label for="inputNib1">NIB</label>
-                                <input type="text" class="form-control" id="inputNib1" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <label for="inputStatus">Status NIB</label>
-                                <input type="text" class="form-control" id="inputStatus" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <label for="inputTglPerubahan">Tgl. Perubahan NIB</label>
-                                <input type="text" class="form-control" id="inputTglPerubahan" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <label for="inputModalTempat">Total modal Ditempatkan</label>
-                                <input type="text" class="form-control" id="inputModalTempat" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <label for="RTRWPerseroan">RT\RW Perseroan</label>
-                                <input type="text" class="form-control" id="RTRWPerseroan" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <label for="KelurahanPerseroan">Kelurahan Perseroan</label>
-                                <input type="text" class="form-control" id="KelurahanPerseroan" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <label for="KotaKabupaten">Kota/Kabupaten Perseroan</label>
-                                <input type="text" class="form-control" id="KotaKabupaten" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <div class="form-group required">
-                                <%--@declare id="inputnib"--%><label for="inputNib">Kode Pos Perseroan</label>
-                                <input type="text" class="form-control" id="KodeposPerseroan" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
+                    <div class="float-left">
+                        <%--@declare id="inputpemegangsaham"--%><label for="inputPemegangSaham" class="required">Pemegang Saham</label>
                     </div>
-                </fieldset>
-
-
-                    <label for="inputPemegangSaham">Pemegang Saham</label>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary btn-popup-mt" data-id="pemegangSaham"
+                                data-popup-title="Pemegang Saham"><i class="fa fa-plus"></i> Tambah</button>
+                    </div>
                     <div class="table-responsive">
                         <div class="table-wrapper">
                             <table class="table table-striped table-hover mt-table-field">
@@ -320,44 +367,18 @@
                                     <th scope="col">&nbsp;</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PemegangSaham[nama][]" class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PemegangSaham[jabatan][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PemegangSaham[npwp][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PemegangSaham[alamat][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td><button type="button" class="btn btn-success btn-circle btn-xs mt-btn-add">
-                                        <i class="fa fa-plus"></i></button></td>
-                                </tr>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
 
-                    <label for="inputPenanggungJawab">Penanggung Jawab</label>
+                    <div class="float-left">
+                        <%--@declare id="inputpenanggungjawab"--%><label for="inputPenanggungJawab">Penanggung Jawab</label>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary btn-popup-mt" data-id="penanggungJawab"
+                                data-popup-title="Penanggung Jawab"><i class="fa fa-plus"></i> Tambah</button>
+                    </div>
                     <div class="table-responsive">
                         <div class="table-wrapper">
                             <table class="table table-striped table-hover mt-table-field">
@@ -370,40 +391,7 @@
                                     <th scope="col">&nbsp;</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PenanggungJawab[nama][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PenanggungJawab[jabatan][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PenanggungJawab[npwp][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group required">
-                                            <input type="text" name="PenanggungJawab[alamat][]"
-                                                   class="form-control" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </td>
-                                    <td><button type="button" class="btn btn-success btn-circle btn-xs mt-btn-add">
-                                        <i class="fa fa-plus"></i></button></td>
-                                </tr>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -411,7 +399,7 @@
                     <div class="form-group required">
                         <label for="uploadNib">Upload Izin NIB</label><br/>
                         <input type="file" id="uploadNib" class="form-control-file"
-                               accept="application/pdf,image/*" required>
+                               name="file_izin" accept="application/pdf,image/*" required>
                         <div class="invalid-feedback"></div>
                     </div>
 
@@ -423,34 +411,34 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group required">
-                                    <label for="inputPerseroan">Nama User Proses</label>
-                                    <input type="text" class="form-control" id="NamaUserProses" required>
+                                    <label for="NamaUser">Nama User Proses</label>
+                                    <input id="NamaUser" type="text" class="form-control" name="nama_user_proses" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="form-group required">
-                                    <label for="inputPerseroan">Daerah ID User Proses</label>
-                                    <input type="text" class="form-control" id="inputPerseroan" required>
+                                    <label for="DaerahUser">Daerah ID User Proses</label>
+                                    <input id="DaerahUser" type="text" class="form-control" name="daerah_id_user_proses" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="form-group required">
-                                    <label for="inputPerseroan">Alamat User Proses</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" required></textarea>
+                                    <label for="AlamatUser">Alamat User Proses</label>
+                                    <textarea id="AlamatUser" class="form-control" name="alamat_user_proses" rows="4" required></textarea>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group required">
-                                    <label for="inputNib">Email User Proses</label>
-                                    <input type="email" class="form-control" id="Email" required>
+                                    <label for="EmailUser">Email User Proses</label>
+                                    <input id="EmailUser" type="email" class="form-control" name="email_user_proses" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="form-group required">
-                                    <label for="inputNib2">No. HP User Proses</label>
-                                    <input type="text" class="form-control" id="inputNib2" required>
+                                    <label for="HpUser">No. HP User Proses</label>
+                                    <input id="HpUser" type="text" class="form-control" name="hp_user_proses" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -479,40 +467,155 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-popup-mt" tabindex="-1" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="formPemegang">
+                    <fieldset>
+                        <legend id="title-legend">Tambah Pemegang Saham</legend>
+
+                        <div class="form-group required">
+                            <label for="PS-Nama">Nama</label>
+                            <input type="text" name="mt_nama" class="form-control" id="PS-Nama" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Jabatan">Jabatan</label>
+                            <input type="text" name="mt_jabatan" class="form-control" id="PS-Jabatan" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Npwp">NPWP</label>
+                            <input type="text" name="mt_npwp" class="form-control" id="PS-Npwp" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Email">Email</label>
+                            <input type="email" name="mt_email" class="form-control" id="PS-Email" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Alamat">Alamat</label>
+                            <textarea name="mt_alamat" class="form-control" id="PS-Alamat" required></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group required">
+                                    <label for="PS-Rt">RT</label>
+                                    <input type="text" name="mt_rt" class="form-control" id="PS-Rt" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group required">
+                                    <label for="PS-Rw">RW</label>
+                                    <input type="text" name="mt_rw" class="form-control" id="PS-Rw" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Provinsi">Provinsi</label>
+                            <select name="mt_provinsi" id="PS-Provinsi" class="form-control" required>
+                                <option value="">- Pilih Provinsi -</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-KotaKabupaten">Kota/Kabupaten</label>
+                            <select name="mt_kabkota" id="PS-KotaKabupaten" class="form-control" required>
+                                <option value="">- Pilih Kota/Kabupaten -</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Kecamatan">Kecamatan</label>
+                            <select name="mt_kecamatan" id="PS-Kecamatan" class="form-control" required>
+                                <option value="">- Pilih Kecamatan -</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group required">
+                            <label for="PS-Kelurahan">Kelurahan</label>
+                            <select name="mt_kelurahan" id="PS-Kelurahan" class="form-control" required>
+                                <option value="">- Pilih Kelurahan -</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div> -->
+
+                        <div class="form-group text-center">
+                            <button id="mt-kembali" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button type="submit" id="mt-tambah" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 <script src="https://www.google.com/recaptcha/api.js?render=6LdTQeMUAAAAAOBQHYlOX1kH7LsQLfxknChH5ZGD"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="${baseUrl}/assets/public/js/jquery.js"></script>
-<script src="${baseUrl}/assets/apps/js/plugins/jquery/jquery_ui.min.js"></script>
-<script src="${baseUrl}/assets/public/js/bootstrap.bundle.min.js"></script>
-<script src="${baseUrl}/assets/public/js/owl.carousel.min.js"></script>
-<script src="${baseUrl}/assets/public/js/waypoints.min.js"></script>
-<script src="${baseUrl}/assets/public/js/jquery.counterup.min.js"></script>
-<script src="${baseUrl}/assets/public/js/waypoints.min.js"></script>
-<script src="${baseUrl}/assets/public/js/jquery.counterup.min.js"></script>
-<script src="${baseUrl}/assets/public/js/owl.carousel.min.js"></script>
-<script src="${baseUrl}/assets/public/js/swiper.min.js"></script>
-<script src="${baseUrl}/assets/public/js/jquery.magnific-popup.min.js"></script>
-<script src="${baseUrl}/public/js/jquery.easing.min.js"></script>
-<script src="${baseUrl}/assets/public/js/theme.js"></script>
-<script src="${baseUrl}/assets/apps/js/plugins/sweetalert/sweetalert.min.js"></script>
-<script src="${baseUrl}/mt-table-field.js"></script>
-<script src="${baseUrl}/req-validation.js"></script>
+<script src="../assets/public/js/jquery.js"></script>
+<script src="../assets/apps/js/plugins/jquery/jquery_ui.min.js"></script>
+<script src="../assets/public/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/public/js/owl.carousel.min.js"></script>
+<script src="../assets/public/js/waypoints.min.js"></script>
+<script src="../assets/public/js/jquery.counterup.min.js"></script>
+<script src="../assets/public/js/waypoints.min.js"></script>
+<script src="../assets/public/js/jquery.counterup.min.js"></script>
+<script src="../assets/public/js/owl.carousel.min.js"></script>
+<script src="../assets/public/js/swiper.min.js"></script>
+<script src="../assets/public/js/jquery.magnific-popup.min.js"></script>
+<script src="../assets/public/js/jquery.easing.min.js"></script>
+<script src="../assets/public/js/theme.js"></script>
+<script src="../assets/apps/js/plugins/sweetalert/sweetalert.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="./mt-table-field.js"></script>
+<script src="./mt-popup-field.js"></script>
+<script src="./req-validation.js"></script>
+<script src="./wilayah.js"></script>
 <script>
+    $(document).on('show.bs.modal', '.modal', function () {
+        var zIndex = 1040 + (10 * $('.modal:visible').length);
+        $(this).css('z-index', zIndex);
+        setTimeout(function() {
+            $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+        }, 0);
+    });
+
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $('.modal:visible').length && $(document.body).addClass('modal-open');
+    });
+
     $('#frmRegistrasi').submit(function(){
         $('#btnSubmit').html('Silahkan Tunggu...').prop('disabled',true).css('cursor','wait');
         //grecaptcha.ready(function() {
         //grecaptcha.execute('6LdTQeMUAAAAAJH-PPa-MlEWSQgv0NPM2DfmDz_o',{action:'login'}).then(function(token) {
-        if($('#txtUsername').val().length>0){
+        if($('#txtUsername').val().length > 0){
             $.ajax({
                 url: 'register',
                 type: 'POST',
                 data: {username:$('#txtUsername').val()}
             }).done(function(data){
                 var result = JSON.parse(data);
-                if(result.code.toString()=='01'){
+
+                if (result.code.toString()=='01') {
                     $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">'+result.message.toString()+'</p>');
-                }else{
+                } else {
                     $('#btnSubmit').html('Registrasi').prop('disabled',false).css('cursor','default');
                     swal({
                         title: "Perhatian",
@@ -545,11 +648,10 @@
                 showCancelButton: false
             });
         }
-        return false;
         // });
         //});
+        return false;
     });
-
     //$('#frmRegistrasi1').submit(function(){
     //    $('#btnSubmit1').html('Silahkan Tunggu...').prop('disabled',false).css('cursor','wait');
     //});
@@ -583,35 +685,174 @@
     //     }
     //     return false;
     // };
+
+    $(document).on("submit", "#regis_manual", function(event) {
+        event.preventDefault();
+
+        let regisFormData = new FormData($(this)[0]);
+
+        // let dataPerseroan = {
+        //     nama_perseroan: regisFormData.get('nama_perseroan'),
+        //     nib: regisFormData.get('nib'),
+        //     npwp_perseroan: regisFormData.get('npwp_perseroan'),
+        //     status_perseroan: regisFormData.get('status_nib'),
+        //     tgl_terbit_nib: regisFormData.get('tgl_terbit_nib'),
+        //     tgl_perubahan_nib: regisFormData.get('tgl_perubahan_nib'),
+        //     total_modal_dasar: regisFormData.get('total_modal_dasar'),
+        //     total_modal_ditempatkan: regisFormData.get('total_modal_ditempatkan'),
+        //     alamat_perseroan: regisFormData.get('alamat_perseroan'),
+        //     rt_rw_perseroan: regisFormData.get('rt_rw_perseroan'),
+        //     kode_pos_perseroan: regisFormData.get('kode_pos_perseroan'),
+        //     nomor_telpon_perseroan: regisFormData.get('nomor_telpon_perseroan'),
+
+        //     nama_user_proses: regisFormData.get('nama_user_proses'),
+        //     email_user_proses: regisFormData.get('email_user_proses'),
+        //     daerah_id_user_proses: regisFormData.get('daerah_id_user_proses'),
+        //     hp_user_proses: regisFormData.get('hp_user_proses'),
+        //     alamat_user_proses: regisFormData.get('alamat_user_proses'),
+
+        //     pemegang_saham: dataPemegang,
+        //     penanggung_jwb: dataPenanggung,
+        // };
+
+        regisFormData.append('pemegang_saham', JSON.stringify(dataPemegang));
+        regisFormData.append('penanggung_jwb', JSON.stringify(dataPenanggung));
+        regisFormData.append('rt_rw_perseroan', `${regisFormData.get('rt')}/${regisFormData.get('rw')}`);
+
+        regisFormData.delete('rt');
+        regisFormData.delete('rw');
+        regisFormData.delete('term');
+
+        console.log(objectifyForm(regisFormData));
+
+        $.ajax({
+            url: '/path/to/post',
+            type: 'POST',
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            cache: false,
+            enctype: 'multipart/form-data',
+            data: regisFormData,
+        })
+            .done(function(res) {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            });
+
+    })
+
+    function objectifyForm(formData) {
+        var object = {};
+        formData.forEach(function(value, key){
+            object[key] = value;
+        });
+
+        return JSON.stringify(object);
+    }
+
 </script>
 <script>
-    let tableClassName = "mt-table-field";
-    let buttonAddClassName = "mt-btn-add";
-    let buttonDeleteClassName = "mt-btn-delete";
-    let iconAddClassName = "fa-plus";
-    let iconDeleteClassName = "fa-minus";
+    let mtTableClassName = "mt-table-field";
+    let mtButton;
+    let countTbody;
 
-    $(document).on("click", `.${buttonAddClassName}`, function () {
-        let row = $(this).parent().parent();
+    let dataPemegang = [];
+    let dataPenanggung = [];
 
-        let duplicatedRow = row.clone();
+    let popup = $('#modal-popup-mt');
 
-        duplicatedRow.find('input').val('');
-        duplicatedRow.find(`.${buttonAddClassName}`)
-            .removeClass(`btn-success ${buttonAddClassName}`)
-            .addClass(`btn-danger ${buttonDeleteClassName}`);
+    $(document).on('click', '.btn-popup-mt', function(e) {
 
-        duplicatedRow.find(`.${iconAddClassName}`)
-            .removeClass(`${iconAddClassName}`)
-            .addClass(`${iconDeleteClassName}`);
+        mtButton = $(this);
 
-        duplicatedRow.insertAfter(row);
+        // Set title
+        popup.find("#title-legend").text($(this).data('popup-title'));
+        popup.modal('show');
     });
 
-    $(document).on("click", `.${buttonDeleteClassName}`, function () {
+    $(document).on('submit', '#formPemegang', function(e) {
+        e.preventDefault();
+
+        let dataForm = new FormData($(this)[0]);
+        let idButton = mtButton.data('id');
+        let varName;
+        let aliasPrefix;
+
+        if (idButton == 'pemegangSaham') {
+            varName = 'pemegang_saham';
+        } else if (idButton == 'penanggungJawab') {
+            varName = 'penanggung_jawab';
+        };
+
+        let data = {
+            [`nama_${varName}`]: dataForm.get("mt_nama"),
+            [`jabatan_${varName}`]: dataForm.get("mt_jabatan"),
+            [`npwp_${varName}`]: dataForm.get("mt_npwp"),
+            [`email_${varName}`]: dataForm.get("mt_email"),
+            [`alamat_${varName}`]: dataForm.get("mt_alamat"),
+        };
+
+        if (idButton == 'pemegangSaham') {
+            dataPemegang.push(data);
+            aliasPrefix = 'ps';
+        } else if (idButton == 'penanggungJawab') {
+            dataPenanggung.push(data);
+            aliasPrefix = 'pj';
+        };
+
+        let mt_tbody = `<tr>`;
+        let ps_nama_val = $(this).find('#PS-Nama').val();
+        let ps_jabatan_val = $(this).find('#PS-Jabatan').val();
+        let ps_npwp_val = $(this).find('#PS-Npwp').val();
+        let ps_alamat_val = $(this).find('#PS-Alamat').val();
+        mt_tbody += `<td class='${aliasPrefix}-nama'>${ps_nama_val}</td>`;
+        mt_tbody += `<td>${ps_jabatan_val}</td>`;
+        mt_tbody += `<td>${ps_npwp_val}</td>`;
+        mt_tbody += `<td>${ps_alamat_val}</td>`;
+        mt_tbody += `<td>
+            <button type='button' class='btn btn-danger btn-delete-mt btn-xs' data-alias='${aliasPrefix}'>
+                <i class='fa fa-minus'></i></button>
+        </td>`;
+        mt_tbody += `</tr>`;
+
+        mtButton.parent().next().find(`.${mtTableClassName} > tbody:last`).append(mt_tbody);
+        popup.modal('hide');
+
+        $(this)[0].reset();
+    })
+
+    $(document).on('click', '.btn-delete-mt', function(e) {
+        e.preventDefault();
+
+        let alias = $(this).data('alias');
         let row = $(this).parent().parent();
+        let nama = row.find(`.${alias}-nama`);
+
+        if (alias == 'ps') {
+            let index = findIndexByKeyValue(dataPemegang, 'nama_pemegang_saham', nama.text());
+            dataPemegang.splice(index, 1);
+
+        } else if (alias == 'pj') {
+            let index = findIndexByKeyValue(dataPenanggung, 'nama_penanggung_jawab', nama.text());
+            dataPenanggung.splice(index, 1);
+
+        }
+
         row.remove();
     })
+
+    function findIndexByKeyValue(arraytosearch, key, valuetosearch) {
+        for (var i = 0; i < arraytosearch.length; i++) {
+            if (arraytosearch[i][key] == valuetosearch) {
+                return i;
+            }
+        }
+
+        return null;
+    }
     $(document).ready(function() {
         // Set message error by label
         $(".invalid-feedback").each(function(val, key) {
@@ -629,6 +870,208 @@
         }
         form.classList.add('was-validated');
     });
+
+    let baseUrlHubla = "https://sehatitest.hubla.dephub.go.id";
+    var token = "c3d3a1db-22b6-3173-a968-07df76b3df06";
+    let version = "";
+    let ids = {
+        provinsiId: ['ProvinsiPerseroan', 'PS-Provinsi'],
+        kotaKabId: ['KotaKabupaten', 'PS-KotaKabupaten'],
+        kecamatanId: ['KecamatanPerseroan', 'PS-Kecamatan'],
+        kelurahanId: ['KelurahanPerseroan', 'PS-Kelurahan'],
+    };
+
+    function setToken() {
+        let token = localStorage.getItem('hublaToken');
+        let expiredToken = new Date(localStorage.getItem('hublaExpiresIn'));
+        let now = new Date;
+
+        if (
+            !token
+            || (expiredToken.getTime() < now.getTime())
+        ) {
+            $.ajax({
+                url: '/token/generate',
+                type: 'get',
+                dataType: 'json',
+                success: function(res) {
+                    let expiredDate = new Date();
+                    expiredDate.setSeconds(expiredDate.getSeconds() + (res.data.expires_in - 10));
+
+                    localStorage.setItem('hublaToken', res.data.access_token);
+                    localStorage.setItem('hublaExpiresIn', expiredDate);
+                }
+            })
+        }
+    }
+
+    $(document).ready(function() {
+        // setToken();
+
+        // INIT PROVINSI
+        $.each(ids.provinsiId, function(index, val) {
+            getWilayah('/apis/data/provinsi', val, {
+                id: "KODE_PROVINSI",
+                value: "NAMA_PROVINSI"
+            }, {}, '- Pilih Provinsi -');
+        })
+    })
+
+    // INIT KOTA KABUPATEN
+    $.each(ids.kotaKabId, function(index, val) {
+        $(document).on('change', `#${ids.provinsiId[index]}`, function(e) {
+            let idProvinsi = $(this).val();
+
+            if (idProvinsi)
+                getWilayah(`/apis/data${version}/kabkota`, val, {
+                    id: "KODE_KABKOTA",
+                    value: "NAMA_KABKOTA"
+                }, {p: idProvinsi}, '- Pilih Kota/Kabupaten -');
+            else
+                setDropdown({}, val, '- Pilih Kota/Kabupaten -');
+        })
+    })
+
+    // INIT KECAMATAN
+    $.each(ids.kecamatanId, function(index, val) {
+        $(document).on('change', `#${ids.kotaKabId[index]}`, function(e) {
+            let idKabupaten = $(this).val();
+
+            if (idKabupaten)
+                getWilayah(`/apis/data${version}/kecamatan`, val, {
+                    id: "KODE_KECAMATAN",
+                    value: "NAMA_KECAMATAN"
+                }, {p: idKabupaten}, '- Pilih Kecamatan -');
+            else
+                setDropdown({}, val, '- Pilih Kecamatan -');
+        })
+    })
+
+    // INIT KELURAHAN
+    $.each(ids.kelurahanId, function(index, val) {
+        $(document).on('change', `#${ids.kecamatanId[index]}`, function(e) {
+            let idKecamatan = $(this).val();
+
+            //     if (idKecamatan)
+            //         getWilayah(`/apis/data${version}/kelurahan`, val, {
+            //             id: "KODE_KELURAHAN",
+            //             value: "NAMA_KELURAHAN"
+            //         }, {p: idKecamatan}, '- Pilih Kelurahan -');
+            //     else
+            //         setDropdown({}, val, '- Pilih Kelurahan -');
+
+            if (idKecamatan) {
+                if ($(`#${val}`).data('select2'))
+                    $(`#${val}`).select2('destroy');
+
+                $(`#${val}`).select2({
+                    minimumInputLength: 3,
+                    allowClear: true,
+                    placeholder: 'Cari Nama Kelurahan',
+                    dropdownParent: $(`#${val}`).parent(),
+                    height: '37px',
+                    ajax: {
+                        dataType: 'json',
+                        url: `${baseUrlHubla}/apis/data${version}/kelurahan`,
+                        delay: 800,
+                        beforeSend: function (xhr) {
+                            // xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
+                            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                        },
+                        data: function(params) {
+                            return {
+                                q: params.term,
+                                p: idKecamatan
+                            }
+                        },
+                        processResults: function (res, page) {
+                            let kelurahans = [];
+
+                            $.each(res.data, function(key, val) {
+                                kelurahans[key] = {id: val.KODE_KELURAHAN, text: val.NAMA_KELURAHAN};
+                            });
+
+                            console.log(kelurahans)
+
+                            return {
+                                results: kelurahans
+                            };
+                        },
+                    }
+                });
+            }
+        })
+
+    })
+
+
+    function getWilayah(path, idDropdown, propSet, params = {}, label = '- Pilih -') {
+        $.ajax({
+            url: `${baseUrlHubla}${path}`,
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                // xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+            },
+            data: params
+        })
+            .done(function(res) {
+                let data = [];
+
+                $.each(res.data, function(key, val) {
+                    let id = val[propSet.id];
+                    let value = val[propSet.value];
+
+                    data[id] = value;
+                });
+
+                setDropdown(data, idDropdown, label);
+            })
+            .fail(function() {
+                console.log("error");
+            });
+    }
+
+    // START SET DROPDOWN
+    function setDropdown(data, id, label = '- Pilih -', $default = null) {
+        let dropdown = $(`#${id}`);
+        dropdown.empty();
+
+        dropdown.append(`<option value="">${label}</option>`);
+        $.each(data, function(index, val) {
+
+            if (typeof val === 'object') {
+                if (val.length == 0) return;
+
+                let opts = `<optgroup label="${index}">`;
+
+                $.each(val, function(index1, val1) {
+                    let selected2 = '';
+                    if ($default == index) {
+                        selected2 = 'selected';
+                    }
+
+                    opts += `<option value="${index1}" ${selected2}>${val1}</option>`;
+                })
+
+                opts += `</optgroup>`;
+
+                dropdown.append(opts);
+
+            } else {
+                let selected = '';
+                if ($default == index) {
+                    selected = 'selected';
+                }
+
+                if (val)
+                    dropdown.append(`<option value="${index}" ${selected}>${val}</option>`);
+            }
+        });
+        dropdown.trigger('change');
+    }
+    // END SET DROPDOWN
 </script>
 </body>
 </html>
