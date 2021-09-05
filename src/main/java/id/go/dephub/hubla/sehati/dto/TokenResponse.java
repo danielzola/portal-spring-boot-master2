@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
 import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 public class TokenResponse implements Serializable {
     @JsonProperty("access_token")
     private String accessToken;

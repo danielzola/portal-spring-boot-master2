@@ -892,7 +892,7 @@
         ) {
             $.ajax({
                 url: '/token/generate',
-                type: 'get',
+                type: 'post',
                 dataType: 'json',
                 success: function(res) {
                     let expiredDate = new Date();
