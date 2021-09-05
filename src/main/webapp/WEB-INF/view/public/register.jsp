@@ -602,6 +602,8 @@
     });
 
     $('#frmRegistrasi').submit(function(){
+        // setToken();
+
         $('#btnSubmit').html('Silahkan Tunggu...').prop('disabled',true).css('cursor','wait');
         //grecaptcha.ready(function() {
         //grecaptcha.execute('6LdTQeMUAAAAAJH-PPa-MlEWSQgv0NPM2DfmDz_o',{action:'login'}).then(function(token) {
@@ -635,6 +637,14 @@
                     closeOnConfirm: false,
                     html: false
                 },  function(){
+                    setToken();
+                    console.log('setToken di modal');
+                    $.each(ids.provinsiId, function(index, val) {
+                        getWilayah('/apis/data/provinsi', val, {
+                            id: "KODE_PROVINSI",
+                            value: "NAMA_PROVINSI"
+                        }, {}, '- Pilih Provinsi -');
+                    })
                     $('#myModal').modal('show');
                     swal.close();
                 });
@@ -903,18 +913,25 @@
                 }
             })
         }
-    }
 
-    $(document).ready(function() {
-        setToken();
-
-        // INIT PROVINSI
         $.each(ids.provinsiId, function(index, val) {
             getWilayah('/apis/data/provinsi', val, {
                 id: "KODE_PROVINSI",
                 value: "NAMA_PROVINSI"
             }, {}, '- Pilih Provinsi -');
         })
+    }
+
+    $(document).ready(function() {
+        // setToken();
+        //
+        // // INIT PROVINSI
+        // $.each(ids.provinsiId, function(index, val) {
+        //     getWilayah('/apis/data/provinsi', val, {
+        //         id: "KODE_PROVINSI",
+        //         value: "NAMA_PROVINSI"
+        //     }, {}, '- Pilih Provinsi -');
+        // })
     })
 
     // INIT KOTA KABUPATEN
@@ -1006,12 +1023,20 @@
 
 
     function getWilayah(path, idDropdown, propSet, params = {}, label = '- Pilih -') {
+        let baseUrlHubla = "https://sehatitest.hubla.dephub.go.id";
+        console.log('getWilayah');
+        console.log(path);
+
+        let fullUrl = baseUrlHubla + path;
+        let theToken = localStorage.getItem('hublaToken');
+        console.log(fullUrl);
+        console.log(theToken);
         $.ajax({
-            url: `${baseUrlHubla}${path}`,
+            url: fullUrl,
             type: 'GET',
             dataType: 'json',
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
+                xhr.setRequestHeader('Authorization', 'Bearer ' + theToken);
                 //xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             },
             data: params
