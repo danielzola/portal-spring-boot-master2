@@ -32,7 +32,7 @@ public class TokenController extends BaseController {
 
 
     @PostMapping("/generate")
-    public ResponseEntity<?> getVerifySign() {
+    public ResponseEntity<?>getVerifySign() {
         System.out.println("masuk controller");
         return ok(tokenService.getTokenResponse());
     }

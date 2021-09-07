@@ -122,7 +122,7 @@
                             <a href="../portal/">Beranda</a>
                         </li>
                         <li class="scrollToLink">
-                            <a href="https://sehatitest.hubla.dephub.go.id/sso/authenticationendpoint/login_client_id%3Db4mC">Login</a>
+                            <a href="https://sehatidev.hubla.dephub.go.id/sso/authenticationendpoint/login_client_id%3Db4mC">Login</a>
                         </li>
                         <li class="scrollToLink">
                             <a href="../forgotpass/">Lupa Password</a>
@@ -210,6 +210,7 @@
                 </h2>
 
                 <form id="regis_manual" method="post" novalidate>
+                    <input type="hidden" name="file_ijin" id="file_ijin">
                     <fieldset>
                         <legend>Data Perusahaan</legend>
 
@@ -584,10 +585,10 @@
 <script src="../assets/apps/js/plugins/sweetalert/sweetalert.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="./mt-table-field.js"></script>
+<!-- <script src="./mt-table-field.js"></script>
 <script src="./mt-popup-field.js"></script>
 <script src="./req-validation.js"></script>
-<script src="./wilayah.js"></script>
+<script src="./wilayah.js"></script> -->
 <script>
     $(document).on('show.bs.modal', '.modal', function () {
         var zIndex = 1040 + (10 * $('.modal:visible').length);
@@ -602,8 +603,6 @@
     });
 
     $('#frmRegistrasi').submit(function(){
-        // setToken();
-
         $('#btnSubmit').html('Silahkan Tunggu...').prop('disabled',true).css('cursor','wait');
         //grecaptcha.ready(function() {
         //grecaptcha.execute('6LdTQeMUAAAAAJH-PPa-MlEWSQgv0NPM2DfmDz_o',{action:'login'}).then(function(token) {
@@ -638,7 +637,7 @@
                     html: false
                 },  function(){
                     setToken();
-                    console.log('setToken di modal');
+
                     $.each(ids.provinsiId, function(index, val) {
                         getWilayah('/apis/data/provinsi', val, {
                             id: "KODE_PROVINSI",
@@ -714,36 +713,58 @@
         //     rt_rw_perseroan: regisFormData.get('rt_rw_perseroan'),
         //     kode_pos_perseroan: regisFormData.get('kode_pos_perseroan'),
         //     nomor_telpon_perseroan: regisFormData.get('nomor_telpon_perseroan'),
-
+        //
         //     nama_user_proses: regisFormData.get('nama_user_proses'),
         //     email_user_proses: regisFormData.get('email_user_proses'),
         //     daerah_id_user_proses: regisFormData.get('daerah_id_user_proses'),
         //     hp_user_proses: regisFormData.get('hp_user_proses'),
         //     alamat_user_proses: regisFormData.get('alamat_user_proses'),
-
+        //
         //     pemegang_saham: dataPemegang,
         //     penanggung_jwb: dataPenanggung,
         // };
 
-        regisFormData.append('pemegang_saham', JSON.stringify(dataPemegang));
-        regisFormData.append('penanggung_jwb', JSON.stringify(dataPenanggung));
-        regisFormData.append('rt_rw_perseroan', `${regisFormData.get('rt')}/${regisFormData.get('rw')}`);
+        function createFormData(formData, key, data) {
+            if (data === Object(data) || Array.isArray(data)) {
+                for (var i in data) {
+                    createFormData(formData, key + '[' + i + ']', data[i]);
+                }
+            } else {
+                formData.append(key, data);
+            }
+        }
+
+        createFormData(regisFormData, 'pemegang_saham', dataPemegang);
+        createFormData(regisFormData, 'penanggung_jwb', dataPenanggung);
+
+        // regisFormData.append('pemegang_saham', JSON.stringify(dataPemegang));
+        // regisFormData.append('penanggung_jwb', JSON.stringify(dataPenanggung));
+        regisFormData.append('rt_rw_perseroan', regisFormData.get('rt') +'/'+ regisFormData.get('rw'));
 
         regisFormData.delete('rt');
         regisFormData.delete('rw');
         regisFormData.delete('term');
+        regisFormData.delete('file_izin');
 
-        console.log(objectifyForm(regisFormData));
+        // console.log(objectifyForm(regisFormData));
+        console.log(regisFormData);
+        let theToken = localStorage.getItem('hublaToken');
 
         $.ajax({
-            url: '/path/to/post',
+            url: 'https://sehatidev.hubla.dephub.go.id/apis/sso/v1/registerNib',
             type: 'POST',
             dataType: 'json',
-            processData: false,
-            contentType: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + theToken);
+                //xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+            },
             cache: false,
-            enctype: 'multipart/form-data',
-            data: regisFormData,
+            processData: false,
+            contentType: "application/json",
+            data: objectifyForm(regisFormData),
+
+
+
         })
             .done(function(res) {
                 console.log("success");
@@ -765,6 +786,15 @@
 
 </script>
 <script>
+    var baseUrlHubla = "https://sehatidev.hubla.dephub.go.id";
+    var version = "";
+    var ids = {
+        provinsiId: ['ProvinsiPerseroan', 'PS-Provinsi'],
+        kotaKabId: ['KotaKabupaten', 'PS-KotaKabupaten'],
+        kecamatanId: ['KecamatanPerseroan', 'PS-Kecamatan'],
+        kelurahanId: ['KelurahanPerseroan', 'PS-Kelurahan'],
+    };
+
     let mtTableClassName = "mt-table-field";
     let mtButton;
     let countTbody;
@@ -773,6 +803,30 @@
     let dataPenanggung = [];
 
     let popup = $('#modal-popup-mt');
+
+    // get a reference to the file input
+    const fileInput = document.getElementById("uploadNib");
+
+    // listen for the change event so we can capture the file
+    fileInput.addEventListener("change", (e) => {
+        // get a reference to the file
+        const file = e.target.files[0];
+
+        // encode the file using the FileReader API
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            // use a regex to remove data url part
+            const base64String = reader.result
+                .replace("data:", "")
+                .replace(/^.+,/, "");
+
+            // log to console
+            // logs wL2dvYWwgbW9yZ...
+            console.log(base64String);
+            document.getElementById("file_ijin").value = base64String;
+        };
+        reader.readAsDataURL(file);
+    });
 
     $(document).on('click', '.btn-popup-mt', function(e) {
 
@@ -798,11 +852,11 @@
         };
 
         let data = {
-            [`nama_${varName}`]: dataForm.get("mt_nama"),
-            [`jabatan_${varName}`]: dataForm.get("mt_jabatan"),
-            [`npwp_${varName}`]: dataForm.get("mt_npwp"),
-            [`email_${varName}`]: dataForm.get("mt_email"),
-            [`alamat_${varName}`]: dataForm.get("mt_alamat"),
+            ['nama_'+ varName]: dataForm.get("mt_nama"),
+            ['jabatan_'+ varName]: dataForm.get("mt_jabatan"),
+            ['npwp_'+ varName]: dataForm.get("mt_npwp"),
+            ['email_'+ varName]: dataForm.get("mt_email"),
+            ['alamat_'+ varName]: dataForm.get("mt_alamat"),
         };
 
         if (idButton == 'pemegangSaham') {
@@ -813,22 +867,22 @@
             aliasPrefix = 'pj';
         };
 
-        let mt_tbody = `<tr>`;
+        let mt_tbody = '<tr>';
         let ps_nama_val = $(this).find('#PS-Nama').val();
         let ps_jabatan_val = $(this).find('#PS-Jabatan').val();
         let ps_npwp_val = $(this).find('#PS-Npwp').val();
         let ps_alamat_val = $(this).find('#PS-Alamat').val();
-        mt_tbody += `<td class='${aliasPrefix}-nama'>${ps_nama_val}</td>`;
-        mt_tbody += `<td>${ps_jabatan_val}</td>`;
-        mt_tbody += `<td>${ps_npwp_val}</td>`;
-        mt_tbody += `<td>${ps_alamat_val}</td>`;
-        mt_tbody += `<td>
-            <button type='button' class='btn btn-danger btn-delete-mt btn-xs' data-alias='${aliasPrefix}'>
-                <i class='fa fa-minus'></i></button>
-        </td>`;
-        mt_tbody += `</tr>`;
+        mt_tbody += '<td class="'+ aliasPrefix +'-nama">'+ ps_nama_val +'</td>';
+        mt_tbody += '<td>'+ ps_jabatan_val +'</td>';
+        mt_tbody += '<td>'+ ps_npwp_val +'</td>';
+        mt_tbody += '<td>'+ ps_alamat_val +'</td>';
+        mt_tbody += '<td>';
+        mt_tbody += '<button type="button" class="btn btn-danger btn-delete-mt btn-xs" data-alias="'+ aliasPrefix +'">';
+        mt_tbody += '<i class="fa fa-minus"></i></button>';
+        mt_tbody += '</td>';
+        mt_tbody += '</tr>';
 
-        mtButton.parent().next().find(`.${mtTableClassName} > tbody:last`).append(mt_tbody);
+        mtButton.parent().next().find('.'+ mtTableClassName +' > tbody:last').append(mt_tbody);
         popup.modal('hide');
 
         $(this)[0].reset();
@@ -839,7 +893,7 @@
 
         let alias = $(this).data('alias');
         let row = $(this).parent().parent();
-        let nama = row.find(`.${alias}-nama`);
+        let nama = row.find('.'+ alias +'-nama');
 
         if (alias == 'ps') {
             let index = findIndexByKeyValue(dataPemegang, 'nama_pemegang_saham', nama.text());
@@ -867,7 +921,7 @@
         // Set message error by label
         $(".invalid-feedback").each(function(val, key) {
             let label = $(this).parent().find("label").text();
-            $(this).text(`${label} mohon diisi.`);
+            $(this).text(label +' mohon diisi.');
         })
     });
 
@@ -881,45 +935,45 @@
         form.classList.add('was-validated');
     });
 
-    let baseUrlHubla = "https://sehatitest.hubla.dephub.go.id";
-    var token = "c3d3a1db-22b6-3173-a968-07df76b3df06";
-    let version = "";
-    let ids = {
-        provinsiId: ['ProvinsiPerseroan', 'PS-Provinsi'],
-        kotaKabId: ['KotaKabupaten', 'PS-KotaKabupaten'],
-        kecamatanId: ['KecamatanPerseroan', 'PS-Kecamatan'],
-        kelurahanId: ['KelurahanPerseroan', 'PS-Kelurahan'],
-    };
-
     function setToken() {
         let token = localStorage.getItem('hublaToken');
         let expiredToken = new Date(localStorage.getItem('hublaExpiresIn'));
         let now = new Date;
 
-        if (
-            !token
-            || (expiredToken.getTime() < now.getTime())
-        ) {
-            $.ajax({
-                url: '/token/generate',
-                type: 'post',
-                dataType: 'json',
-                success: function(res) {
-                    let expiredDate = new Date();
-                    expiredDate.setSeconds(expiredDate.getSeconds() + (res.data.expires_in - 10));
+        $.ajax({
+            url: '/token/generate',
+            type: 'post',
+            dataType: 'json',
+            success: function(res) {
+                let expiredDate = new Date();
+                expiredDate.setSeconds(expiredDate.getSeconds() + (res.data.expires_in - 10));
 
-                    localStorage.setItem('hublaToken', res.data.access_token);
-                    localStorage.setItem('hublaExpiresIn', expiredDate);
-                }
-            })
-        }
-
-        $.each(ids.provinsiId, function(index, val) {
-            getWilayah('/apis/data/provinsi', val, {
-                id: "KODE_PROVINSI",
-                value: "NAMA_PROVINSI"
-            }, {}, '- Pilih Provinsi -');
+                localStorage.setItem('hublaToken', res.data.access_token);
+                localStorage.setItem('hublaExpiresIn', expiredDate);
+            }
         })
+
+        // Aktifkan nanti
+        // if (
+        //     !token
+        //     || (expiredToken.getTime() < now.getTime())
+        // ) {
+        //
+        // }
+
+        // // Nonaktifkan nanti
+        // let expiredDate = new Date();
+        // expiredDate.setSeconds(expiredDate.getSeconds() + 3600);
+        //
+        // localStorage.setItem('hublaToken', '8ff58092-a885-355d-8e4c-50009e119f48');
+        // localStorage.setItem('hublaExpiresIn', expiredDate);
+        //
+        // $.each(ids.provinsiId, function(index, val) {
+        //     getWilayah('/apis/data/provinsi', val, {
+        //         id: "KODE_PROVINSI",
+        //         value: "NAMA_PROVINSI"
+        //     }, {}, '- Pilih Provinsi -');
+        // })
     }
 
     $(document).ready(function() {
@@ -936,11 +990,11 @@
 
     // INIT KOTA KABUPATEN
     $.each(ids.kotaKabId, function(index, val) {
-        $(document).on('change', `#${ids.provinsiId[index]}`, function(e) {
+        $(document).on('change', '#'+ ids.provinsiId[index], function(e) {
             let idProvinsi = $(this).val();
 
             if (idProvinsi)
-                getWilayah(`/apis/data${version}/kabkota`, val, {
+                getWilayah('/apis/data'+ version +'/kabkota', val, {
                     id: "KODE_KABKOTA",
                     value: "NAMA_KABKOTA"
                 }, {p: idProvinsi}, '- Pilih Kota/Kabupaten -');
@@ -951,11 +1005,11 @@
 
     // INIT KECAMATAN
     $.each(ids.kecamatanId, function(index, val) {
-        $(document).on('change', `#${ids.kotaKabId[index]}`, function(e) {
+        $(document).on('change', '#'+ ids.kotaKabId[index], function(e) {
             let idKabupaten = $(this).val();
 
             if (idKabupaten)
-                getWilayah(`/apis/data${version}/kecamatan`, val, {
+                getWilayah('/apis/data'+ version +'/kecamatan', val, {
                     id: "KODE_KECAMATAN",
                     value: "NAMA_KECAMATAN"
                 }, {p: idKabupaten}, '- Pilih Kecamatan -');
@@ -966,11 +1020,11 @@
 
     // INIT KELURAHAN
     $.each(ids.kelurahanId, function(index, val) {
-        $(document).on('change', `#${ids.kecamatanId[index]}`, function(e) {
+        $(document).on('change', '#'+ ids.kecamatanId[index], function(e) {
             let idKecamatan = $(this).val();
 
             //     if (idKecamatan)
-            //         getWilayah(`/apis/data${version}/kelurahan`, val, {
+            //         getWilayah('/apis/data'+ version +'/kelurahan', val, {
             //             id: "KODE_KELURAHAN",
             //             value: "NAMA_KELURAHAN"
             //         }, {p: idKecamatan}, '- Pilih Kelurahan -');
@@ -978,21 +1032,25 @@
             //         setDropdown({}, val, '- Pilih Kelurahan -');
 
             if (idKecamatan) {
-                if ($(`#${val}`).data('select2'))
-                    $(`#${val}`).select2('destroy');
+                if ($('#'+ val).data('select2'))
+                    $('#'+ val).select2('destroy');
 
-                $(`#${val}`).select2({
+                let theToken = localStorage.getItem('hublaToken');
+
+                console.log(theToken);
+
+                $('#'+ val).select2({
                     minimumInputLength: 3,
                     allowClear: true,
                     placeholder: 'Cari Nama Kelurahan',
-                    dropdownParent: $(`#${val}`).parent(),
+                    dropdownParent: $('#'+ val).parent(),
                     height: '37px',
                     ajax: {
                         dataType: 'json',
-                        url: `${baseUrlHubla}/apis/data${version}/kelurahan`,
+                        url: baseUrlHubla + '/apis/data'+ version +'/kelurahan',
                         delay: 800,
                         beforeSend: function (xhr) {
-                            xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('hublaToken')}`);
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + theToken);
                             //xhr.setRequestHeader('Authorization', `Bearer ${token}`);
                         },
                         data: function(params) {
@@ -1018,19 +1076,15 @@
                 });
             }
         })
-
     })
 
 
     function getWilayah(path, idDropdown, propSet, params = {}, label = '- Pilih -') {
-        let baseUrlHubla = "https://sehatitest.hubla.dephub.go.id";
-        console.log('getWilayah');
-        console.log(path);
+        // let baseUrlHubla = "https://sehatitest.hubla.dephub.go.id";
 
         let fullUrl = baseUrlHubla + path;
         let theToken = localStorage.getItem('hublaToken');
-        console.log(fullUrl);
-        console.log(theToken);
+
         $.ajax({
             url: fullUrl,
             type: 'GET',
@@ -1060,16 +1114,16 @@
 
     // START SET DROPDOWN
     function setDropdown(data, id, label = '- Pilih -', $default = null) {
-        let dropdown = $(`#${id}`);
+        let dropdown = $('#'+ id);
         dropdown.empty();
 
-        dropdown.append(`<option value="">${label}</option>`);
+        dropdown.append('<option value="">'+ label +'</option>');
         $.each(data, function(index, val) {
 
             if (typeof val === 'object') {
                 if (val.length == 0) return;
 
-                let opts = `<optgroup label="${index}">`;
+                let opts = '<optgroup label="'+ index +'">';
 
                 $.each(val, function(index1, val1) {
                     let selected2 = '';
@@ -1077,10 +1131,10 @@
                         selected2 = 'selected';
                     }
 
-                    opts += `<option value="${index1}" ${selected2}>${val1}</option>`;
+                    opts += '<option value="'+ index1 +'" '+ selected2 +'>'+ val1 +'</option>';
                 })
 
-                opts += `</optgroup>`;
+                opts += '</optgroup>';
 
                 dropdown.append(opts);
 
@@ -1091,7 +1145,7 @@
                 }
 
                 if (val)
-                    dropdown.append(`<option value="${index}" ${selected}>${val}</option>`);
+                    dropdown.append('<option value="'+ index +'" '+ selected +'>'+ val +'</option>');
             }
         });
         dropdown.trigger('change');
