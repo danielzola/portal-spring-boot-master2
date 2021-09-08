@@ -712,11 +712,10 @@
             status_nib: regisFormData.get('status_nib'),
             tgl_perubahan_nib: regisFormData.get('tgl_perubahan_nib'),
             total_modal_ditempatkan: regisFormData.get('total_modal_ditempatkan'),
-            provinsi_perseroan: regisFormData.get('provinsi_perseroan'),
+            propinsi_perseroan: regisFormData.get('provinsi_perseroan'),
             kabkota_perseroan: regisFormData.get('kabkota_perseroan'),
             kecamatan_perseroan: regisFormData.get('kecamatan_perseroan'),
             kelurahan_perseroan: regisFormData.get('kelurahan_perseroan'),
-
             rt_rw_perseroan: regisFormData.get('rt') +'/'+ regisFormData.get('rw'),
             nama_user_proses: regisFormData.get('nama_user_proses'),
             daerah_id_user_proses: regisFormData.get('daerah_id_user_proses'),
@@ -858,7 +857,7 @@
         if (idButton == 'pemegangSaham') {
             varName = 'pemegang_saham';
         } else if (idButton == 'penanggungJawab') {
-            varName = 'penanggung_jawab';
+            varName = 'penanggung_jwb';
         };
 
         let data = {
@@ -910,7 +909,7 @@
             dataPemegang.splice(index, 1);
 
         } else if (alias == 'pj') {
-            let index = findIndexByKeyValue(dataPenanggung, 'nama_penanggung_jawab', nama.text());
+            let index = findIndexByKeyValue(dataPenanggung, 'nama_penanggung_jwb', nama.text());
             dataPenanggung.splice(index, 1);
 
         }
