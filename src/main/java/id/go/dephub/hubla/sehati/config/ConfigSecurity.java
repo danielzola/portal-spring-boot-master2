@@ -14,9 +14,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
    protected void configure(HttpSecurity http) throws Exception {
        http.authorizeRequests()
-       		   .antMatchers("/portal", "/assets/**", "/map", "/gis/**", "/files/upload/verifypdf",
-       				   		"/files/preview/verifypdf/**", "/verifysign", "/register", "/activate/*",
-       				   		"/activate", "/forgotpass", "/resetpass", "/resetpass/*","/token/*")
+       		   .antMatchers("/portal", "/assets/**", "/map", "/gis/**", "/files/upload/verifypdf", 
+       				   		"/files/preview/verifypdf/**", "/verifysign", "/register", "/activate/*", 
+       				   		"/activate", "/forgotpass", "/resetpass", "/resetpass/*")
                .permitAll()
                .anyRequest()
                .authenticated()
@@ -26,13 +26,13 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
                .logout().logoutUrl("/applogout")
                .logoutSuccessHandler(oidcLogoutSuccessHandler());
    }
-
+   
    @Autowired
    private ClientRegistrationRepository clientRegistrationRepository;
 
    @SuppressWarnings("deprecation")
 	private LogoutSuccessHandler oidcLogoutSuccessHandler() {
-       OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
+       OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler = 
        new OidcClientInitiatedLogoutSuccessHandler(this.clientRegistrationRepository);
        oidcLogoutSuccessHandler.setPostLogoutRedirectUri(URI.create("https://sehati.hubla.dephub.go.id"));
        return oidcLogoutSuccessHandler;
