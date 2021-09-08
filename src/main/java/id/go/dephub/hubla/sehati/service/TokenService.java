@@ -1,8 +1,6 @@
 package id.go.dephub.hubla.sehati.service;
 
 import id.go.dephub.hubla.sehati.dto.TokenResponse;
-import jdk.nashorn.internal.parser.Token;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

@@ -700,29 +700,35 @@
 
         let regisFormData = new FormData($(this)[0]);
 
-        // let dataPerseroan = {
-        //     nama_perseroan: regisFormData.get('nama_perseroan'),
-        //     nib: regisFormData.get('nib'),
-        //     npwp_perseroan: regisFormData.get('npwp_perseroan'),
-        //     status_perseroan: regisFormData.get('status_nib'),
-        //     tgl_terbit_nib: regisFormData.get('tgl_terbit_nib'),
-        //     tgl_perubahan_nib: regisFormData.get('tgl_perubahan_nib'),
-        //     total_modal_dasar: regisFormData.get('total_modal_dasar'),
-        //     total_modal_ditempatkan: regisFormData.get('total_modal_ditempatkan'),
-        //     alamat_perseroan: regisFormData.get('alamat_perseroan'),
-        //     rt_rw_perseroan: regisFormData.get('rt_rw_perseroan'),
-        //     kode_pos_perseroan: regisFormData.get('kode_pos_perseroan'),
-        //     nomor_telpon_perseroan: regisFormData.get('nomor_telpon_perseroan'),
-        //
-        //     nama_user_proses: regisFormData.get('nama_user_proses'),
-        //     email_user_proses: regisFormData.get('email_user_proses'),
-        //     daerah_id_user_proses: regisFormData.get('daerah_id_user_proses'),
-        //     hp_user_proses: regisFormData.get('hp_user_proses'),
-        //     alamat_user_proses: regisFormData.get('alamat_user_proses'),
-        //
-        //     pemegang_saham: dataPemegang,
-        //     penanggung_jwb: dataPenanggung,
-        // };
+        let dataPerseroan = {
+            nama_perseroan: regisFormData.get('nama_perseroan'),
+            npwp_perseroan: regisFormData.get('npwp_perseroan'),
+            tgl_terbit_nib: regisFormData.get('tgl_terbit_nib'),
+            total_modal_dasar: regisFormData.get('total_modal_dasar'),
+            alamat_perseroan: regisFormData.get('alamat_perseroan'),
+            kode_pos_perseroan: regisFormData.get('kode_pos_perseroan'),
+            nomor_telpon_perseroan: regisFormData.get('nomor_telpon_perseroan'),
+            nib: regisFormData.get('nib'),
+            status_nib: regisFormData.get('status_nib'),
+            tgl_perubahan_nib: regisFormData.get('tgl_perubahan_nib'),
+            total_modal_ditempatkan: regisFormData.get('total_modal_ditempatkan'),
+            provinsi_perseroan: regisFormData.get('provinsi_perseroan'),
+            kabkota_perseroan: regisFormData.get('kabkota_perseroan'),
+            kecamatan_perseroan: regisFormData.get('kecamatan_perseroan'),
+            kelurahan_perseroan: regisFormData.get('kelurahan_perseroan'),
+
+            rt_rw_perseroan: regisFormData.get('rt') +'/'+ regisFormData.get('rw'),
+            nama_user_proses: regisFormData.get('nama_user_proses'),
+            daerah_id_user_proses: regisFormData.get('daerah_id_user_proses'),
+            alamat_user_proses: regisFormData.get('alamat_user_proses'),
+            email_user_proses: regisFormData.get('email_user_proses'),
+            hp_user_proses: regisFormData.get('hp_user_proses'),
+            pemegang_saham: dataPemegang,
+            penanggung_jwb: dataPenanggung,
+            file_ijin: regisFormData.get('file_ijin'),
+        };
+
+        console.log(dataPerseroan);
 
         function createFormData(formData, key, data) {
             if (data === Object(data) || Array.isArray(data)) {
@@ -734,22 +740,28 @@
             }
         }
 
-        createFormData(regisFormData, 'pemegang_saham', dataPemegang);
-        createFormData(regisFormData, 'penanggung_jwb', dataPenanggung);
+        // createFormData(regisFormData, 'pemegang_saham', dataPemegang);
+        // createFormData(regisFormData, 'penanggung_jwb', dataPenanggung);
 
         // regisFormData.append('pemegang_saham', JSON.stringify(dataPemegang));
         // regisFormData.append('penanggung_jwb', JSON.stringify(dataPenanggung));
-        regisFormData.append('rt_rw_perseroan', regisFormData.get('rt') +'/'+ regisFormData.get('rw'));
+        // regisFormData.append('rt_rw_perseroan', regisFormData.get('rt') +'/'+ regisFormData.get('rw'));
 
-        regisFormData.delete('rt');
-        regisFormData.delete('rw');
-        regisFormData.delete('term');
-        regisFormData.delete('file_izin');
+        // regisFormData.delete('rt');
+        // regisFormData.delete('rw');
+        // regisFormData.delete('term');
+        // regisFormData.delete('file_izin');
+
+        // regisFormDataObj = objectifyForm(regisFormData);
+        // regisFormDataObj["pemegang_saham"] = dataPemegang;
+        // regisFormDataObj["penanggung_jwb"] = dataPenanggung;
 
         // console.log(objectifyForm(regisFormData));
-        console.log(regisFormData);
+        // console.log(regisFormDataObj);
+
         let theToken = localStorage.getItem('hublaToken');
 
+        // call registerNib
         $.ajax({
             url: 'https://sehatidev.hubla.dephub.go.id/apis/sso/v1/registerNib',
             type: 'POST',
@@ -759,12 +771,10 @@
                 //xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             },
             cache: false,
-            processData: false,
-            contentType: "application/json",
-            data: objectifyForm(regisFormData),
-
-
-
+            // processData: false,
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            data: JSON.stringify(dataPerseroan),
         })
             .done(function(res) {
                 console.log("success");
