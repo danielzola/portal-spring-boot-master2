@@ -117,9 +117,13 @@
             <scope>provided</scope>
         </dependency>
 		<dependency>
+
 			<groupId>org.projectlombok</groupId>
+
 			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
+
+			<optional>true</optional>
+
 		</dependency>
 	</dependencies>
 	<build>
