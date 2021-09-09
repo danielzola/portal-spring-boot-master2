@@ -776,10 +776,32 @@
             data: JSON.stringify(dataPerseroan),
         })
             .done(function(res) {
-                console.log("success");
+                if (res.status == 1) {
+                    swal({
+                        title: "Registrasi Berhasil",
+                        text: "Silahkan login ke aplikasi menggunakan nomor NIB anda untuk melanjutkan",
+                        type: "success",
+                        confirmButtonColor: "#134563",
+                        confirmButtonText: "OK",
+                        closeOnConfirm: false,
+                        html: false
+                    },  function(){
+                        location.reload();
+
+                        swal.close();
+                    });
+                }
             })
             .fail(function() {
-                console.log("error");
+                swal({
+                    title: "Perhatian",
+                    text: "Proses registrasi belum berhasil, silahkan coba beberapa saat lagi",
+                    type: "error",
+                    confirmButtonColor: "#134563",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: false,
+                    html: false
+                });
             });
 
     })
