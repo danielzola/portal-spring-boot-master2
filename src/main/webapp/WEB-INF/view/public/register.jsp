@@ -374,7 +374,7 @@
                     </div>
 
                     <div class="float-left">
-                        <%--@declare id="inputpenanggungjawab"--%><label for="inputPenanggungJawab">Penanggung Jawab</label>
+                        <%--@declare id="inputpenanggungjawab"--%><label for="inputPenanggungJawab" class="required">Penanggung Jawab</label>
                     </div>
                     <div class="float-right">
                         <button type="button" class="btn btn-primary btn-popup-mt" data-id="penanggungJawab"

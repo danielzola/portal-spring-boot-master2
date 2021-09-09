@@ -57,8 +57,8 @@ public class HomeDaoImp implements HomeDao{
 	
 	@Override
 	public String baseUrl(HttpServletRequest request) {
-		//String baseUrl = String.format("%s://%s", "https", request.getServerName(), "");
-		String baseUrl = String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
+		String baseUrl = String.format("%s://%s", "https", request.getServerName());
+//		String baseUrl = String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
 		return baseUrl;
 	}
 
