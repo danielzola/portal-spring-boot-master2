@@ -225,7 +225,8 @@
 
                                 <div class="form-group required">
                                     <label for="inputNpwp">NPWP Perseroan</label>
-                                    <input type="text" name="npwp_perseroan" class="form-control" id="inputNpwp" tabindex="3" required>
+                                    <input type="text" name="`_perseroan" class="form-control" id="inputNpwp" tabindex="3" maxlength="16"
+                                           required placeholder="Silahkan isi 16 digit angka tanpa titik ('.') dan strip ('-')">
                                     <div class="invalid-feedback"></div>
                                 </div>
 
@@ -238,7 +239,7 @@
 
                                 <div class="form-group required">
                                     <label for="inputTotalModal">Total Modal Dasar</label>
-                                    <input type="text" name="total_modal_dasar" class="form-control numeric"
+                                    <input type="number" name="total_modal_dasar" class="form-control numeric"
                                            id="inputTotalModal" tabindex="7" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -292,7 +293,7 @@
 
                                 <div class="form-group required">
                                     <label for="inputModalTempat">Total modal Ditempatkan</label>
-                                    <input type="text" class="form-control" name="total_modal_ditempatkan"
+                                    <input type="number" class="form-control" name="total_modal_ditempatkan"
                                            id="inputModalTempat" tabindex="8" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -377,7 +378,7 @@
                     </div>
 
                     <div class="float-left">
-                        <%--@declare id="inputpenanggungjawab"--%><label for="inputPenanggungJawab" class="required">Penanggung Jawab</label>
+                        <%--@declare id="inputpenanggungjawab"--%><label for="inputPenanggungJawab">Penanggung Jawab</label>
                     </div>
                     <div class="float-right">
                         <button type="button" class="btn btn-primary btn-popup-mt" data-id="penanggungJawab"
@@ -410,7 +411,7 @@
                     <br/>
 
                     <fieldset>
-                        <legend>Data User Proses</legend>
+                        <legend>Data User Proses / PIC Perseroan</legend>
 
                         <div class="form-row">
                             <div class="col-md-6">
@@ -498,7 +499,8 @@
 
                         <div class="form-group required">
                             <label for="PS-Npwp">NPWP</label>
-                            <input type="text" name="mt_npwp" class="form-control" id="PS-Npwp" required>
+                            <input type="text" name="mt_npwp" class="form-control" id="PS-Npwp" required  maxlength="16"
+                                   placeholder="Silahkan isi 16 digit angka tanpa titik ('.') dan strip ('-')">
                             <div class="invalid-feedback"></div>
                         </div>
 
@@ -735,7 +737,7 @@
             file_ijin: regisFormData.get('file_ijin'),
         };
 
-        console.log(dataPerseroan);
+        // console.log(JSON.stringify(dataPerseroan));
 
         function createFormData(formData, key, data) {
             if (data === Object(data) || Array.isArray(data)) {
@@ -861,7 +863,6 @@
 
             // log to console
             // logs wL2dvYWwgbW9yZ...
-            console.log(base64String);
             document.getElementById("file_ijin").value = base64String;
         };
         reader.readAsDataURL(file);
@@ -990,29 +991,7 @@
                 localStorage.setItem('hublaToken', res.data.access_token);
                 localStorage.setItem('hublaExpiresIn', expiredDate);
             }
-        })
-
-        // Aktifkan nanti
-        // if (
-        //     !token
-        //     || (expiredToken.getTime() < now.getTime())
-        // ) {
-        //
-        // }
-
-        // // Nonaktifkan nanti
-        // let expiredDate = new Date();
-        // expiredDate.setSeconds(expiredDate.getSeconds() + 3600);
-        //
-        // localStorage.setItem('hublaToken', '8ff58092-a885-355d-8e4c-50009e119f48');
-        // localStorage.setItem('hublaExpiresIn', expiredDate);
-        //
-        // $.each(ids.provinsiId, function(index, val) {
-        //     getWilayah('/apis/data/provinsi', val, {
-        //         id: "KODE_PROVINSI",
-        //         value: "NAMA_PROVINSI"
-        //     }, {}, '- Pilih Provinsi -');
-        // })
+        });
     }
 
     $(document).ready(function() {
@@ -1076,8 +1055,6 @@
 
                 let theToken = localStorage.getItem('hublaToken');
 
-                console.log(theToken);
-
                 $('#'+ val).select2({
                     minimumInputLength: 3,
                     allowClear: true,
@@ -1105,8 +1082,6 @@
                                 kelurahans[key] = {id: val.KODE_KELURAHAN, text: val.NAMA_KELURAHAN};
                             });
 
-                            console.log(kelurahans)
-
                             return {
                                 results: kelurahans
                             };
@@ -1119,7 +1094,7 @@
 
 
     function getWilayah(path, idDropdown, propSet, params = {}, label = '- Pilih -') {
-        // let baseUrlHubla = "https://sehatitest.hubla.dephub.go.id";
+        // let baseUrlHubla = "https://sehatidev.hubla.dephub.go.id";
 
         let fullUrl = baseUrlHubla + path;
         let theToken = localStorage.getItem('hublaToken');
