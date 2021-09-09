@@ -231,7 +231,7 @@
 
                                 <div class="form-group required">
                                     <label for="inputTglTerbit">Tgl. Terbit NIB</label>
-                                    <input type="text" name="tgl_terbit_nib" class="form-control datepicker"
+                                    <input type="text" name="tgl_terbit_nib" class="form-control" placeholder="yyyy-mm-dd"
                                            id="inputTglTerbit" tabindex="5" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -275,14 +275,17 @@
 
                                 <div class="form-group required">
                                     <label for="inputStatus">Status NIB</label>
-                                    <input type="text" class="form-control" name="status_nib"
-                                           id="inputStatus" tabindex="4" required>
+                                    <select class="form-control" name="status_nib" id="inputStatus" required>
+                                        <option value="">- Pilih Status NIB -</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Tidak Aktif">Tidak Aktif</option>
+                                    </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="form-group required">
                                     <label for="inputTglPerubahan">Tgl. Perubahan NIB</label>
-                                    <input type="text" class="form-control datepicker" name="tgl_perubahan_nib"
+                                    <input type="text" class="form-control" placeholder="yyyy-mm-dd" name="tgl_perubahan_nib"
                                            id="inputTglPerubahan" tabindex="6" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -484,7 +487,12 @@
 
                         <div class="form-group required">
                             <label for="PS-Jabatan">Jabatan</label>
-                            <input type="text" name="mt_jabatan" class="form-control" id="PS-Jabatan" required>
+                            <select  name="mt_jabatan" class="form-control" id="PS-Jabatan" required>
+                                <option value="">- Pilih Jabatan -</option>
+                                <option value="Direktur Utama">Direktur Utama</option>
+                                <option value="Direktur">Direktur</option>
+                                <option value="Komisaris">Komisaris</option>
+                            </select>
                             <div class="invalid-feedback"></div>
                         </div>
 
