@@ -64,8 +64,8 @@ public class HomeDaoImp implements HomeDao{
 
 	@Override
 	public String authorizationRequestBaseUri() {
-	    //String authorizationRequestBaseUri = "/signin/oauth2/authorization/wso2";
-	    String authorizationRequestBaseUri = "/oauth2/authorization/wso2";		
+	    String authorizationRequestBaseUri = "/signin/oauth2/authorization/wso2";
+//	    String authorizationRequestBaseUri = "/oauth2/authorization/wso2";
 		return authorizationRequestBaseUri;
 	}
 

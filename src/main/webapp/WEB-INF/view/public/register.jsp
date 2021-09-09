@@ -122,7 +122,7 @@
                             <a href="../portal/">Beranda</a>
                         </li>
                         <li class="scrollToLink">
-                            <a href="https://sehatidev.hubla.dephub.go.id/sso/authenticationendpoint/login_client_id%3Db4mC">Login</a>
+                            <a href="${urls}">Login</a>
                         </li>
                         <li class="scrollToLink">
                             <a href="../forgotpass/">Lupa Password</a>
