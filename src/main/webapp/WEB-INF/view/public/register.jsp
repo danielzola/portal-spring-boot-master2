@@ -625,7 +625,7 @@
                 var result = JSON.parse(data);
 
                 if (result.code.toString()=='01') {
-                    $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">' + result.message.toString() + '</p>');
+                    $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">NIB atau NIK Anda sudah terregistrasi. Silakan gunakan NIB atau NIK Anda untuk Login ke sistem.</p>');
                 } else if (result.code.toString()=='02') {
                     // registrasi manual
                     $('#btnSubmit').html('Registrasi').prop('disabled', false).css('cursor','default');
