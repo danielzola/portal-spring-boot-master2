@@ -5,6 +5,7 @@ import id.go.dephub.hubla.sehati.dao.UserDao;
 import id.go.dephub.hubla.sehati.service.FilesStorageService;
 import id.go.dephub.hubla.sehati.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,12 @@ public class PublicController {
 
 	@Autowired
 	UserDao users;
+
+	@Value("${registernib.url}")
+	private String registerNibUrl;
+
+	@Value("${hubla.base.url}")
+	private String hublaBaseUrl;
 
 	@GetMapping("/portal")
     public String getLoginPage(Model model, HttpServletRequest request, HttpSession session) {
@@ -85,6 +92,8 @@ public class PublicController {
 	    model.addAttribute("application_name", application_name);
 	    model.addAttribute("application_description", application_description);
 	    model.addAttribute("application_version", application_version);
+		model.addAttribute("registerNibUrl", registerNibUrl);
+		model.addAttribute("hublaBaseUrl", hublaBaseUrl);
 		return "public/register";
 	}
 

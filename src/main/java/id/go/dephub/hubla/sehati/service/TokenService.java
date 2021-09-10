@@ -17,7 +17,7 @@ public class TokenService {
     private String clientSecret;
 
     @Value("${hubla.token.base.url}")
-    private String clientUrl;
+    private String apisTokenUrl;
 
     private static final String GRANT_TYPE="grant_type";
     private static final String CLIENT_CREDENTIALS="client_credentials";
@@ -33,7 +33,7 @@ public class TokenService {
         map.add(GRANT_TYPE,CLIENT_CREDENTIALS);
         headers.setBasicAuth(clientId,clientSecret);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-        ResponseEntity<TokenResponse> response=restTemplate.exchange(clientUrl, HttpMethod.POST,request,TokenResponse.class);
+        ResponseEntity<TokenResponse> response=restTemplate.exchange(apisTokenUrl, HttpMethod.POST,request,TokenResponse.class);
         return response.getBody();
     }
 }

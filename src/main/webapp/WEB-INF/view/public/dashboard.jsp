@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/js/plugins/pixioverlay/css/leaflet.css">
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/js/plugins/leaflet/L.Control.SlideMenu.css">
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/js/plugins/leaflet/L.Control.Window.css">
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/js/plugins/leaflet/leaflet.fullscreen.css">
+    <link rel="stylesheet" href="../assets/apps/js/plugins/pixioverlay/css/leaflet.css">
+    <link rel="stylesheet" href="../assets/apps/js/plugins/leaflet/L.Control.SlideMenu.css">
+    <link rel="stylesheet" href="../assets/apps/js/plugins/leaflet/L.Control.Window.css">
+    <link rel="stylesheet" href="../assets/apps/js/plugins/leaflet/leaflet.fullscreen.css">
     <style>
 	.loader {
 	  position: relative;
@@ -52,12 +52,12 @@
 		      <div class="loader"></div>
 		</div>
     </div>
-	<script src="${baseUrl}/assets/apps/js/plugins/pixioverlay/js/example.min.js"></script>
-	<script src="${baseUrl}/assets/apps/js/plugins/pixioverlay/js/tools.min.js"></script>
-	<script src="${baseUrl}/assets/apps/js/plugins/leaflet/esri-leaflet.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/leaflet/L.Control.SlideMenu.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/leaflet/L.Control.Window.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/leaflet/leaflet.fullscreen.js"></script>   
+	<script src="../assets/apps/js/plugins/pixioverlay/js/example.min.js"></script>
+	<script src="../assets/apps/js/plugins/pixioverlay/js/tools.min.js"></script>
+	<script src="../assets/apps/js/plugins/leaflet/esri-leaflet.js"></script>
+    <script src="../assets/apps/js/plugins/leaflet/L.Control.SlideMenu.js"></script>
+    <script src="../assets/apps/js/plugins/leaflet/L.Control.Window.js"></script>
+    <script src="../assets/apps/js/plugins/leaflet/leaflet.fullscreen.js"></script>   
     <script>
     var getJSON = function(url, successHandler, errorHandler) {
 		var xhr = typeof XMLHttpRequest != 'undefined'
@@ -117,27 +117,27 @@
        '<b style="font-size:14px !important; color:#FFF;">Layer Data</b><br>'+
        '<div class="console-checkbox-list" style="margin-top:10px;">'+
            '<label class="con-check" style="color:#FFF;">'+
-               '<input type="checkbox" onclick="toggleGroup()" checked value="port" class="markerGroup cbxpelabuhan"> <img src="${baseUrl}/assets/public/images/icon/port.webp"> &nbsp; Pelabuhan'+
+               '<input type="checkbox" onclick="toggleGroup()" checked value="port" class="markerGroup cbxpelabuhan"> <img src="../assets/public/images/icon/port.webp"> &nbsp; Pelabuhan'+
                '<span class="checkmark"></span>'+
            '</label>'+
            '<label class="con-check" style="color:#FFF;">'+
-               '<input type="checkbox" onclick="toggleGroup()" value="ship" class="markerGroup cbxkapal"> <img src="${baseUrl}/assets/public/images/icon/ship-green.webp"> &nbsp; Posisi Kapal'+
+               '<input type="checkbox" onclick="toggleGroup()" value="ship" class="markerGroup cbxkapal"> <img src="../assets/public/images/icon/ship-green.webp"> &nbsp; Posisi Kapal'+
                '<span class="checkmark"></span>'+
            '</label>'+
            '<label class="con-check" style="color:#FFF;">'+
-               '<input type="checkbox" onclick="toggleGroup()" value="sbnp" class="markerGroup cbxsbnp"> <img src="${baseUrl}/assets/public/images/icon/sbnp.webp"> &nbsp; SBNP'+
+               '<input type="checkbox" onclick="toggleGroup()" value="sbnp" class="markerGroup cbxsbnp"> <img src="../assets/public/images/icon/sbnp.webp"> &nbsp; SBNP'+
                '<span class="checkmark"></span>'+
            '</label>'+
            '<label class="con-check" style="color:#FFF;">'+
-               '<input type="checkbox" onclick="toggleGroup()" value="srop" class="markerGroup cbxsrop"> <img src="${baseUrl}/assets/public/images/icon/srop.webp"> &nbsp; SROP'+
+               '<input type="checkbox" onclick="toggleGroup()" value="srop" class="markerGroup cbxsrop"> <img src="../assets/public/images/icon/srop.webp"> &nbsp; SROP'+
                '<span class="checkmark"></span>'+
            '</label>'+
            '<label class="con-check" style="color:#FFF;">'+
-               '<input type="checkbox" onclick="toggleGroup()" value="tersus" class="markerGroup cbxtersus"> <img src="${baseUrl}/assets/public/images/icon/tersus.webp"> &nbsp; TERSUS/TUKS'+
+               '<input type="checkbox" onclick="toggleGroup()" value="tersus" class="markerGroup cbxtersus"> <img src="../assets/public/images/icon/tersus.webp"> &nbsp; TERSUS/TUKS'+
                '<span class="checkmark"></span>'+
            '</label>'+
            '<label class="con-check" style="color:#FFF;">'+
-               '<input type="checkbox" onclick="toggleGroup()" value="vts" class="markerGroup cbxvts"> <img src="${baseUrl}/assets/public/images/icon/vts.webp"> &nbsp; VTS'+
+               '<input type="checkbox" onclick="toggleGroup()" value="vts" class="markerGroup cbxvts"> <img src="../assets/public/images/icon/vts.webp"> &nbsp; VTS'+
                '<span class="checkmark"></span>'+
            '</label>'+
        '</div>'+
@@ -161,12 +161,12 @@
 	map.addControl(new L.Control.Fullscreen({position: 'topright'}));
 	
 	var loader = new PIXI.loaders.Loader();
-	loader.add('port', '${baseUrl}/assets/public/images/icon/port.webp')
-		  .add('sbnp', '${baseUrl}/assets/public/images/icon/sbnp.webp')
-		  .add('srop', '${baseUrl}/assets/public/images/icon/srop.webp')
-		  .add('vts', '${baseUrl}/assets/public/images/icon/vts.webp')
-		  .add('tersus', '${baseUrl}/assets/public/images/icon/tersus.webp')
-		  .add('ship', '${baseUrl}/assets/public/images/icon/ship-green.webp');
+	loader.add('port', '../assets/public/images/icon/port.webp')
+		  .add('sbnp', '../assets/public/images/icon/sbnp.webp')
+		  .add('srop', '../assets/public/images/icon/srop.webp')
+		  .add('vts', '../assets/public/images/icon/vts.webp')
+		  .add('tersus', '../assets/public/images/icon/tersus.webp')
+		  .add('ship', '../assets/public/images/icon/ship-green.webp');
 	
 	var layerPort=1;
 	var layerSbnp=0; var firstSbnp = 0;

@@ -13,14 +13,14 @@
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
-    <link rel="shortcut icon" href="${baseUrl}/assets/public/images/favicon/favicon.png">
+    <link rel="shortcut icon" href="../assets/public/images/favicon/favicon.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="${baseUrl}/assets/public/css/style.css">
-    <link rel="stylesheet" href="${baseUrl}/assets/public/css/responsive.css">
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/js/plugins/sweetalert/sweetalert.css">
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/css/dripicon.css" type="text/css" />
-    <link rel="stylesheet" href="${baseUrl}/assets/apps/js/plugins/jquery-upload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../assets/public/css/style.css">
+    <link rel="stylesheet" href="../assets/public/css/responsive.css">
+    <link rel="stylesheet" href="../assets/apps/js/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="../assets/apps/css/dripicon.css" type="text/css" />
+    <link rel="stylesheet" href="../assets/apps/js/plugins/jquery-upload/css/jquery.fileupload.css">
 </head>
 <body>
 	<div class="preloader" style="z-index:99999999 !important;"></div>
@@ -31,7 +31,7 @@
                     <div class="logo-box clearfix">
                         <div class="navbar-brand" style="color:#fff;">
                         	<div class="row">
-                        		<div class="col-5"><img id="header-logo" src="${baseUrl}/assets/public/images/logo/logo-kemenhub.png" class="main-logo header-logo"/></div>
+                        		<div class="col-5"><img id="header-logo" src="../assets/public/images/logo/logo-kemenhub.png" class="main-logo header-logo"/></div>
                         		<div class="col-6 header-title">${application_name} ${application_version}</div>
                         	</div>
                         </div>
@@ -61,7 +61,7 @@
         <section class="banner-one" id="home">
             <div class="container">
                 <div class="banner-one__moc-wrap">
-                    <img src="${baseUrl}/assets/public/images/logo/logo-sehati.webp" class="banner-one__moc" width="500" style="left:5px; margin-top:-50px;"/>
+                    <img src="../assets/public/images/logo/logo-sehati.webp" class="banner-one__moc" width="500" style="left:5px; margin-top:-50px;"/>
                 </div>
                 <div class="row justify-content-end">
                     <div class="col-lg-6 col-md-6">
@@ -145,19 +145,19 @@ Silahkan cek keabsahan dan keaslian dokumen Anda.</p><!-- /.service-one__text --
             	<br>
                 <div class="brand-one__carousel owl-theme owl-carousel">
                     <div class="item">
-                        <img src="${baseUrl}/assets/public/images/logo/logo-kemenkeu.webp" alt="Kementerian Keuangan" />
+                        <img src="../assets/public/images/logo/logo-kemenkeu.webp" alt="Kementerian Keuangan" />
                     </div>
                     <div class="item">
-                        <img src="${baseUrl}/assets/public/images/logo/logo-bssn.webp" alt="Badan Siber dan Sandi Negara"/>
+                        <img src="../assets/public/images/logo/logo-bssn.webp" alt="Badan Siber dan Sandi Negara"/>
                     </div>
                     <div class="item">
-                        <img src="${baseUrl}/assets/public/images/logo/logo-bsre.webp" alt="Balai Sertifikasi Elektronik" />
+                        <img src="../assets/public/images/logo/logo-bsre.webp" alt="Balai Sertifikasi Elektronik" />
                     </div>
                     <div class="item">
-                        <img src="${baseUrl}/assets/public/images/logo/logo-bkpm.webp" alt="Badan Koordinasi Penanaman Modal" />
+                        <img src="../assets/public/images/logo/logo-bkpm.webp" alt="Badan Koordinasi Penanaman Modal" />
                     </div>
                     <div class="item">
-                        <img src="${baseUrl}/assets/public/images/logo/logo-oss.webp" alt="Online Single Submission" />
+                        <img src="../assets/public/images/logo/logo-oss.webp" alt="Online Single Submission" />
                     </div>
                 </div>
             </div>
@@ -198,22 +198,22 @@ Silahkan cek keabsahan dan keaslian dokumen Anda.</p><!-- /.service-one__text --
         </footer>
     </div>
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
-    <script src="${baseUrl}/assets/public/js/jquery.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/jquery/jquery_ui.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/bootstrap.bundle.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/owl.carousel.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/waypoints.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/jquery.counterup.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/waypoints.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/jquery.counterup.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/owl.carousel.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/swiper.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/jquery.magnific-popup.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/jquery.easing.min.js"></script>
-    <script src="${baseUrl}/assets/public/js/theme.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/sweetalert/sweetalert.min.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/jquery-upload/js/jquery.ui.widget.js"></script>
-    <script src="${baseUrl}/assets/apps/js/plugins/jquery-upload/js/jquery.fileupload.js"></script>
-    <script src="${baseUrl}/assets/public/js/home.js"></script>
+    <script src="../assets/public/js/jquery.js"></script>
+    <script src="../assets/apps/js/plugins/jquery/jquery_ui.min.js"></script>
+    <script src="../assets/public/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/public/js/owl.carousel.min.js"></script>
+    <script src="../assets/public/js/waypoints.min.js"></script>
+    <script src="../assets/public/js/jquery.counterup.min.js"></script>
+    <script src="../assets/public/js/waypoints.min.js"></script>
+    <script src="../assets/public/js/jquery.counterup.min.js"></script>
+    <script src="../assets/public/js/owl.carousel.min.js"></script>
+    <script src="../assets/public/js/swiper.min.js"></script>
+    <script src="../assets/public/js/jquery.magnific-popup.min.js"></script>
+    <script src="../assets/public/js/jquery.easing.min.js"></script>
+    <script src="../assets/public/js/theme.js"></script>
+    <script src="../assets/apps/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="../assets/apps/js/plugins/jquery-upload/js/jquery.ui.widget.js"></script>
+    <script src="../assets/apps/js/plugins/jquery-upload/js/jquery.fileupload.js"></script>
+    <script src="../assets/public/js/home.js"></script>
 </body>
 </html>

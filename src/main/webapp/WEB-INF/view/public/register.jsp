@@ -193,7 +193,7 @@
         <div class="site-footer__bottom">
             <div class="container">
                 <p class="site-footer__copy-text">
-                    Copyright <i class="fa fa-copyright"></i> 2020. <a href="http://dephub.go.id" target="blank">Kementerian Perhubungan Republik Indonesia</a>
+                    Copyright <i class="fa fa-copyright"></i> 2021. <a href="http://dephub.go.id" target="blank">Kementerian Perhubungan Republik Indonesia</a>
                 </p>
             </div>
         </div>
@@ -225,7 +225,7 @@
 
                                 <div class="form-group required">
                                     <label for="inputNpwp">NPWP Perseroan</label>
-                                    <input type="text" name="`_perseroan" class="form-control" id="inputNpwp" tabindex="3" maxlength="16"
+                                    <input type="text" name="npwp_perseroan" class="form-control" id="inputNpwp" tabindex="3" maxlength="16"
                                            required placeholder="Silahkan isi 16 digit angka tanpa titik ('.') dan strip ('-')">
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -625,7 +625,30 @@
                 var result = JSON.parse(data);
 
                 if (result.code.toString()=='01') {
-                    $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">'+result.message.toString()+'</p>');
+                    $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">' + result.message.toString() + '</p>');
+                } else if (result.code.toString()=='02') {
+                    // registrasi manual
+                    $('#btnSubmit').html('Registrasi').prop('disabled', false).css('cursor','default');
+                    swal({
+                        title: "Perhatian",
+                        text: "NIB belum teregistrasi otomatis. Silahkan Registrasi Manual.",
+                        type: "warning",
+                        confirmButtonColor: "#134563",
+                        confirmButtonText: "OK",
+                        closeOnConfirm: false,
+                        html: false
+                    },  function(){
+                        setToken();
+
+                        $.each(ids.provinsiId, function(index, val) {
+                            getWilayah('/apis/data/provinsi', val, {
+                                id: "KODE_PROVINSI",
+                                value: "NAMA_PROVINSI"
+                            }, {}, '- Pilih Provinsi -');
+                        })
+                        $('#myModal').modal('show');
+                        swal.close();
+                    });
                 } else {
                     $('#btnSubmit').html('Registrasi').prop('disabled',false).css('cursor','default');
                     swal({
@@ -671,39 +694,6 @@
         //});
         return false;
     });
-    //$('#frmRegistrasi1').submit(function(){
-    //    $('#btnSubmit1').html('Silahkan Tunggu...').prop('disabled',false).css('cursor','wait');
-    //});
-    // function ingat(){
-    //     // alert("String");
-    //     var t_input = 0;
-    //     var arr_input = [];
-    //     $("#regis_manual").find('input').each(function(q,val) {
-    //         if ($(this).val() == ""){
-    //             t_input++;
-    //         } else {
-    //             arr_input = $(this).val();
-    //         }
-    //     });
-    //     if(t_input > 0) {
-    //         alert('Registrasi Tidak Boleh Kosong !');
-    //     } else {
-    //         $.ajax({
-    //             url: 'regis_manual',
-    //             type: 'POST',
-    //             data: {username:$('#regis_manual').val()}
-    //         })
-    //         // ajax API post
-    //     }
-    //     var tanda = document.getElementById("tanda");
-    //     var centang = document.getElementById("centangbox");
-    //     if (centang.check == false){
-    //         tanda.display = "block";
-    //     }else {
-    //         tanda.display = "none";
-    //     }
-    //     return false;
-    // };
 
     $(document).on("submit", "#regis_manual", function(event) {
         event.preventDefault();
@@ -772,7 +762,7 @@
 
         // call registerNib
         $.ajax({
-            url: 'https://sehatidev.hubla.dephub.go.id/apis/sso/v1/registerNib',
+            url: '${registerNibUrl}',
             type: 'POST',
             dataType: 'json',
             beforeSend: function (xhr) {
@@ -787,25 +777,47 @@
         })
             .done(function(res) {
                 if (res.status == 1) {
-                    swal({
-                        title: "Registrasi Berhasil",
-                        text: "Silahkan login ke aplikasi menggunakan nomor NIB anda untuk melanjutkan",
-                        type: "success",
-                        confirmButtonColor: "#134563",
-                        confirmButtonText: "OK",
-                        closeOnConfirm: false,
-                        html: false
-                    },  function(){
-                        location.reload();
+                    $.ajax({
+                        url: 'register',
+                        type: 'POST',
+                        data: {username:dataPerseroan.nib}
+                    }).done(function(data){
+                        swal({
+                            title: "Registrasi Berhasil",
+                            text: "Silahkan login ke aplikasi menggunakan nomor NIB anda untuk melanjutkan",
+                            type: "success",
+                            confirmButtonColor: "#134563",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false,
+                            html: false
+                        },  function(){
+                            location.reload();
 
-                        swal.close();
+                            swal.close();
+                        });
+
+                        var result = JSON.parse(data);
+
+                        if (result.code.toString()=='01') {
+                            $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">'+result.message.toString()+'</p>');
+                        } else {
+                            $('#btnSubmit').html('Registrasi').prop('disabled',false).css('cursor','default');
+
+                            swal({
+                                title: "Perhatian",
+                                text: result.message.toString(),
+                                type: "warning",
+                                showCancelButton: false
+                            });
+                        }
                     });
+
                 }
             })
             .fail(function() {
                 swal({
                     title: "Perhatian",
-                    text: "Proses registrasi belum berhasil, silahkan coba beberapa saat lagi",
+                    text: "Proses registrasi belum berhasil, silahkan coba beberapa saat lagi atau hubungi contact center",
                     type: "error",
                     confirmButtonColor: "#134563",
                     confirmButtonText: "OK",
@@ -827,7 +839,7 @@
 
 </script>
 <script>
-    var baseUrlHubla = "https://sehatidev.hubla.dephub.go.id";
+    var baseUrlHubla = "${hublaBaseUrl}";
     var version = "";
     var ids = {
         provinsiId: ['ProvinsiPerseroan', 'PS-Provinsi'],

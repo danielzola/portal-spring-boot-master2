@@ -71,15 +71,15 @@ public class HomeDaoImp implements HomeDao{
 
 	@Override
 	public String rootPath() {
-		//String rootpath = "/opt/tomcat/apache-tomcat-9.0.41/webapps/ROOT/WEB-INF/upload";
-		String rootpath = "/Users/satrinugraha/Projects/Governments/KEMENHUB/sehati-2.0/src/main/resources/static/upload";
+		String rootpath = "/opt/tomcat/apache-tomcat-9.0.41/webapps/ROOT/WEB-INF/upload";
+//		String rootpath = "/Users/satrinugraha/Projects/Governments/KEMENHUB/sehati-2.0/src/main/resources/static/upload";
 		return rootpath;
 	}
 	
 	@Override
 	public String root() {
-		//String rootpath = "/opt/tomcat/apache-tomcat-9.0.41/webapps/ROOT/WEB-INF/";
-		String rootpath = "/Users/satrinugraha/Projects/Governments/KEMENHUB/sehati-2.0/src/main/resources/static/";
+		String rootpath = "/opt/tomcat/apache-tomcat-9.0.41/webapps/ROOT/WEB-INF/";
+//		String rootpath = "/Users/satrinugraha/Projects/Governments/KEMENHUB/sehati-2.0/src/main/resources/static/";
 		return rootpath;
 	}
 	
@@ -93,8 +93,8 @@ public class HomeDaoImp implements HomeDao{
 		    bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 370, 370, hints);
 		    MatrixToImageConfig config = new MatrixToImageConfig(0xFF2C166E, MatrixToImageConfig.WHITE);
 		    BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(bitMatrix, config);
-		    //File file = new File(root()+"classes/static/assets/apps/images/qrlogo.png");
-		    File file = new File(root()+"assets/apps/images/qrlogo.png");
+		    File file = new File(root()+"classes/static/assets/apps/images/qrlogo.png");
+//		    File file = new File(root()+"assets/apps/images/qrlogo.png");
 		    BufferedImage logoImage = ImageIO.read(file);
 		    int deltaHeight = qrImage.getHeight() - logoImage.getHeight();
 		    int deltaWidth = qrImage.getWidth() - logoImage.getWidth();
@@ -103,8 +103,8 @@ public class HomeDaoImp implements HomeDao{
 		    g.drawImage(qrImage, 0, 0, null);
 		    g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		    g.drawImage(logoImage, (int) Math.round(deltaWidth / 2), (int) Math.round(deltaHeight / 2), null);
-		    //ImageIO.write(combined, "png", new File(root()+"classes/static/assets/apps/images/qrcode.png"));		    
-		    ImageIO.write(combined, "png", new File(root()+"assets/apps/images/qrcode.png"));		    
+		    ImageIO.write(combined, "png", new File(root()+"classes/static/assets/apps/images/qrcode.png"));
+//		    ImageIO.write(combined, "png", new File(root()+"assets/apps/images/qrcode.png"));
 		} catch (Exception e) {
 			
 		}  
