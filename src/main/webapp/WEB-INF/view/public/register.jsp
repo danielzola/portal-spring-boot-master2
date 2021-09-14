@@ -911,6 +911,10 @@
             ['alamat_'+ varName]: dataForm.get("mt_alamat"),
         };
 
+        if (varName == 'penanggung_jwb') {
+            data['rt_rw_'+ varName] = "00/00";
+        }
+
         if (idButton == 'pemegangSaham') {
             dataPemegang.push(data);
             aliasPrefix = 'ps';
