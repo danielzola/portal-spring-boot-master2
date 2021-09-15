@@ -625,7 +625,7 @@
                 var result = JSON.parse(data);
 
                 if (result.code.toString()=='01') {
-                    $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">NIB atau NIK Anda sudah terregistrasi. Silakan gunakan NIB atau NIK Anda untuk Login ke sistem.</p>');
+                    $('#contentRegistrasi').html(result.message);
                 } else if (result.code.toString()=='02') {
                     // registrasi manual
                     $('#btnSubmit').html('Registrasi').prop('disabled', false).css('cursor','default');
@@ -776,7 +776,7 @@
             data: JSON.stringify(dataPerseroan),
         })
             .done(function(res) {
-                if (res.status == 1) {
+                if (res.status.toString() == "1") {
                     $.ajax({
                         url: 'register',
                         type: 'POST',
@@ -784,7 +784,7 @@
                     }).done(function(data){
                         swal({
                             title: "Registrasi Berhasil",
-                            text: "Silahkan login ke aplikasi menggunakan nomor NIB anda untuk melanjutkan",
+                            text: "Terima Kasih. Akun Anda telah berhasil terregistrasi secara manual. Silakan pergunakan NIB Anda untuk login ke sistem.",
                             type: "success",
                             confirmButtonColor: "#134563",
                             confirmButtonText: "OK",
@@ -799,7 +799,7 @@
                         var result = JSON.parse(data);
 
                         if (result.code.toString()=='01') {
-                            $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Registrasi Berhasil</strong></h3><p class="blog-details__text text-center">'+result.message.toString()+'</p>');
+                            $('#contentRegistrasi').html('<h3 class="blog-blog-details__title text-center"><strong>Sudah Terregistrasi</strong></h3><p class="blog-details__text text-center">'+result.message.toString()+'</p>');
                         } else {
                             $('#btnSubmit').html('Registrasi').prop('disabled',false).css('cursor','default');
 

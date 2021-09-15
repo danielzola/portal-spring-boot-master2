@@ -221,7 +221,7 @@ public class RegisterServiceImp implements RegisterService {
 					    			if(objSendNotif.getString("status").equals("001")) {
 					    				code = "01";
 					    				status = "success";
-					    				message = "Terima Kasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email dinas Anda";
+					    				message = "Terimakasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email dinas Anda";
 					    			}
 				        		}
 				        	}
@@ -286,7 +286,7 @@ public class RegisterServiceImp implements RegisterService {
 				    			if(objSendNotif.getString("status").equals("001")) {
 				    				code = "01";
 				    				status = "success";
-				    				message = "Terima Kasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email dinas Anda";
+				    				message = "Terimakasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email dinas Anda";
 				    			}
 			        		}
 							return   "{"+
@@ -440,7 +440,7 @@ public class RegisterServiceImp implements RegisterService {
 
 									code = "01";
 									status = "success";
-									message = "Terima Kasih. Akun Anda telah berhasil terregistrasi secara otomatis. Silakan pergunakan NIB Anda untuk login ke sistem.";
+									message = "<h3 class='blog-blog-details__title text-center'><strong>Registrasi Berhasil</strong></h3><p class='blog-details__text text-center'>Terimakasih. Akun Anda telah berhasil terregistrasi secara otomatis. Silakan pergunakan NIB Anda untuk login ke sistem.</p>";
 
 									// ======================= enable if need activation
 //									RestTemplate apiSendNotif = new RestTemplate();
@@ -463,7 +463,7 @@ public class RegisterServiceImp implements RegisterService {
 //									if(objSendNotif.getString("status").equals("001")) {
 //										code = "01";
 //										status = "success";
-//										message = "Terima Kasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email Anda";
+//										message = "Terimakasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email Anda";
 //									}
 
 									// ======================= END enable if need activation
@@ -519,89 +519,99 @@ public class RegisterServiceImp implements RegisterService {
 					 			 + "from portal.tm_users a where a.user_name=?";
 			@SuppressWarnings("deprecation")
 			String user_status = portalTemplate.queryForObject(sqlUserStatus, new Object[]{username}, String.class);
-			
-			if(user_status.equals("2")) {
-				
-		        String sqlUserId = "select a.user_id "
-						 			 + "from portal.tm_users a where a.user_name=?";
-				@SuppressWarnings("deprecation")
-				int user_id = portalTemplate.queryForObject(sqlUserId, new Object[]{username}, Integer.class);
-				
-				
-        		String reset_key = home.getSecure(user_id+username+home.getNow("yyyy-MM-dd HH:mm:ss"));	
-        		String sqlReset = "INSERT INTO portal.tx_reset "
-		        				+ "(user_id, reset_key, reset_expired, reset_status, reset_date) "
-		        				+ "VALUES(?, ?, NOW() AT TIME ZONE 'Asia/Jakarta' + INTERVAL '1 DAYS', ?, NOW() AT TIME ZONE 'Asia/Jakarta')";
-        		int rowInsertReset = portalTemplate.update(sqlReset, new PreparedStatementSetter() {
-		              public void setValues(PreparedStatement ps) throws SQLException {
-		            	  ps.setInt(1, user_id);
-		            	  ps.setString(2, reset_key);
-		            	  ps.setString(3, "0");
-		              }
-        		});		
-        		
-        		if(rowInsertReset>0) {
-        			
-        			RestTemplate restTemplate = new RestTemplate();
-        			HttpHeaders headers = new HttpHeaders();
-        			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        			headers.add("Authorization", "Basic "+home.getInitByName("api_basic_auth"));
-        			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        			map.add("grant_type","client_credentials");
-        			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
-        			ResponseEntity<String> responseToken = restTemplate.exchange(apisUrl+"/token", HttpMethod.POST, entity, String.class);
-        			String jsonToken		 = responseToken.getBody();
-        			JSONObject dataToken 	 = new JSONObject(jsonToken.toString());
-        			String access_token		 = dataToken.getString("access_token");
 
-			        String sqlLog  = "INSERT INTO portal.tx_log "
-					        	   + "(user_id, log_desc, log_date, log_ip) "
-					        	   + "VALUES(?, ?, NOW() AT TIME ZONE 'Asia/Jakarta', ?)";
-			        portalTemplate.update(sqlLog, new PreparedStatementSetter() {
-									              public void setValues(PreparedStatement ps) throws SQLException {
-									            	  ps.setInt(1, user_id);
-									            	  ps.setString(2, "Registrasi Akun");
-									            	  ps.setString(3, home.getClientIp(request));
-									              }
-								          });
-        			
-	        		RestTemplate apiSendNotif = new RestTemplate();
-	    			HttpHeaders headerSendNotif = new HttpHeaders();
-	    			headerSendNotif.setContentType(MediaType.APPLICATION_JSON);
-	    			headerSendNotif.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-	    			headerSendNotif.add("Authorization", "Bearer "+access_token);			
-	    			Map<String, Object> mapSendNotif = new HashMap<>();
-	    			mapSendNotif.put("username", username);
-	    			
-	    			Map<String, Object> mapSendNotifEmail = new HashMap<>();
-	    			mapSendNotifEmail.put("subject", "Aktivasi Akun SEHATI");
-	    			mapSendNotifEmail.put("message", "<table><tr><td><img width=\"70\" src=\""+"https://sehati.hubla.dephub.go.id/assets/public/images/logo/logo-kemenhub.png\"></td><td style=\"padding-left:10px;\"><div style=\"font-size:16px;\"><b>SEHATI</b></div><div>Sistem Elektronik Hubla Terintegrasi 2.0<div><div style=\"font-size:14px;\">Direktorat Jenderal Perhubungan Laut</div><div style=\"font-size:16px;\">Kementerian Perhubungan Republik Indonesia<div></td><tr></table><hr><div style=\"width:100%; text-align:left;\"><div><b>Selamat datang di Aplikasi SEHATI</b></div>Untuk mengaktifkan akun klik tautan dibawah ini <br> <a style=\"font-size:20px; font-weight:bold;\" target=\"_blank\" href=\""+activationUrl+"/"+reset_key+"\">Aktifkan Akun</a></div>");
-	    			mapSendNotif.put("email", mapSendNotifEmail);
-	    							    			
-	    			HttpEntity<Map<String, Object>> entitySendNotif = new HttpEntity<>(mapSendNotif, headerSendNotif);
-	    			ResponseEntity<String> responseSendNotif = apiSendNotif.postForEntity(apisUrl+"/notif/send", entitySendNotif, String.class);
-	    			String jsonSendNotif 		 = responseSendNotif.getBody();
-	    			JSONObject objSendNotif 	 = new JSONObject(jsonSendNotif);
-	    			if(objSendNotif.getString("status").equals("001")) {
-	    				code = "01";
-	    				status = "success";
-	    				message = "Terima Kasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email Anda";
-	    			}
-        		}
-        		
-				return   "{"+
-							"\"code\":\""+code+"\","+
-							"\"status\":\""+status+"\","+
-							"\"message\":\""+message+"\""+
-						 "}";				
-				
-			}else {
-				return   "{"+
-						"\"code\":\"02\","+
-						"\"status\":\"failed\","+
-						"\"message\":\"NIB/NIP sudah terdaftar. Silakan login.\""+
-					 "}";
-			}
+			code = "01";
+			status = "success";
+			message = "<h3 class='blog-blog-details__title text-center'><strong>NIB Sudah Terregistrasi</strong></h3><p class='blog-details__text text-center'>Silakan login ke sistem.</p>";
+
+			return   "{"+
+					"\"code\":\""+code+"\","+
+					"\"status\":\""+status+"\","+
+					"\"message\":\""+message+"\""+
+					"}";
+			
+//			if(user_status.equals("2")) {
+//
+//		        String sqlUserId = "select a.user_id "
+//						 			 + "from portal.tm_users a where a.user_name=?";
+//				@SuppressWarnings("deprecation")
+//				int user_id = portalTemplate.queryForObject(sqlUserId, new Object[]{username}, Integer.class);
+//
+//
+//        		String reset_key = home.getSecure(user_id+username+home.getNow("yyyy-MM-dd HH:mm:ss"));
+//        		String sqlReset = "INSERT INTO portal.tx_reset "
+//		        				+ "(user_id, reset_key, reset_expired, reset_status, reset_date) "
+//		        				+ "VALUES(?, ?, NOW() AT TIME ZONE 'Asia/Jakarta' + INTERVAL '1 DAYS', ?, NOW() AT TIME ZONE 'Asia/Jakarta')";
+//        		int rowInsertReset = portalTemplate.update(sqlReset, new PreparedStatementSetter() {
+//		              public void setValues(PreparedStatement ps) throws SQLException {
+//		            	  ps.setInt(1, user_id);
+//		            	  ps.setString(2, reset_key);
+//		            	  ps.setString(3, "0");
+//		              }
+//        		});
+//
+//        		if(rowInsertReset>0) {
+//
+//        			RestTemplate restTemplate = new RestTemplate();
+//        			HttpHeaders headers = new HttpHeaders();
+//        			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//        			headers.add("Authorization", "Basic "+home.getInitByName("api_basic_auth"));
+//        			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+//        			map.add("grant_type","client_credentials");
+//        			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+//        			ResponseEntity<String> responseToken = restTemplate.exchange(apisUrl+"/token", HttpMethod.POST, entity, String.class);
+//        			String jsonToken		 = responseToken.getBody();
+//        			JSONObject dataToken 	 = new JSONObject(jsonToken.toString());
+//        			String access_token		 = dataToken.getString("access_token");
+//
+//			        String sqlLog  = "INSERT INTO portal.tx_log "
+//					        	   + "(user_id, log_desc, log_date, log_ip) "
+//					        	   + "VALUES(?, ?, NOW() AT TIME ZONE 'Asia/Jakarta', ?)";
+//			        portalTemplate.update(sqlLog, new PreparedStatementSetter() {
+//									              public void setValues(PreparedStatement ps) throws SQLException {
+//									            	  ps.setInt(1, user_id);
+//									            	  ps.setString(2, "Registrasi Akun");
+//									            	  ps.setString(3, home.getClientIp(request));
+//									              }
+//								          });
+//
+//	        		RestTemplate apiSendNotif = new RestTemplate();
+//	    			HttpHeaders headerSendNotif = new HttpHeaders();
+//	    			headerSendNotif.setContentType(MediaType.APPLICATION_JSON);
+//	    			headerSendNotif.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+//	    			headerSendNotif.add("Authorization", "Bearer "+access_token);
+//	    			Map<String, Object> mapSendNotif = new HashMap<>();
+//	    			mapSendNotif.put("username", username);
+//
+//	    			Map<String, Object> mapSendNotifEmail = new HashMap<>();
+//	    			mapSendNotifEmail.put("subject", "Aktivasi Akun SEHATI");
+//	    			mapSendNotifEmail.put("message", "<table><tr><td><img width=\"70\" src=\""+"https://sehati.hubla.dephub.go.id/assets/public/images/logo/logo-kemenhub.png\"></td><td style=\"padding-left:10px;\"><div style=\"font-size:16px;\"><b>SEHATI</b></div><div>Sistem Elektronik Hubla Terintegrasi 2.0<div><div style=\"font-size:14px;\">Direktorat Jenderal Perhubungan Laut</div><div style=\"font-size:16px;\">Kementerian Perhubungan Republik Indonesia<div></td><tr></table><hr><div style=\"width:100%; text-align:left;\"><div><b>Selamat datang di Aplikasi SEHATI</b></div>Untuk mengaktifkan akun klik tautan dibawah ini <br> <a style=\"font-size:20px; font-weight:bold;\" target=\"_blank\" href=\""+activationUrl+"/"+reset_key+"\">Aktifkan Akun</a></div>");
+//	    			mapSendNotif.put("email", mapSendNotifEmail);
+//
+//	    			HttpEntity<Map<String, Object>> entitySendNotif = new HttpEntity<>(mapSendNotif, headerSendNotif);
+//	    			ResponseEntity<String> responseSendNotif = apiSendNotif.postForEntity(apisUrl+"/notif/send", entitySendNotif, String.class);
+//	    			String jsonSendNotif 		 = responseSendNotif.getBody();
+//	    			JSONObject objSendNotif 	 = new JSONObject(jsonSendNotif);
+//	    			if(objSendNotif.getString("status").equals("001")) {
+//	    				code = "01";
+//	    				status = "success";
+//	    				message = "Terimakasih. Untuk mengaktifkan akun silahkan klik tautan yang telah dikirimkan ke email Anda";
+//	    			}
+//        		}
+//
+//				return   "{"+
+//							"\"code\":\""+code+"\","+
+//							"\"status\":\""+status+"\","+
+//							"\"message\":\""+message+"\""+
+//						 "}";
+//
+//			}else {
+//				return   "{"+
+//						"\"code\":\"02\","+
+//						"\"status\":\"failed\","+
+//						"\"message\":\"NIB/NIP sudah terdaftar. Silakan login.\""+
+//					 "}";
+//			}
 		}
 		
 	}
