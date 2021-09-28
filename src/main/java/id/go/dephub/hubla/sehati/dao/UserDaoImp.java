@@ -236,17 +236,28 @@ public class UserDaoImp implements UserDao{
 				status  = "failed";
 				message = "Konfirmasi password tidak sesuai";
 			}else {
-		        String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_password=?, user_status=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
-			    int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
-									              public void setValues(PreparedStatement ps) throws SQLException {
-									            	  ps.setString(1, request.getParameter("user_nik"));
-									            	  ps.setString(2, request.getParameter("user_hp"));
-									            	  ps.setString(3, home.getSecure(request.getParameter("user_password")));
-									            	  ps.setString(4, request.getParameter("user_status"));
-									            	  ps.setInt(5, (Integer)request.getSession().getAttribute("sessionUserId"));
-									            	  ps.setString(6, request.getParameter("emp_number"));
-									              }
-								    });
+//		        String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_password=?, user_status=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
+//			    int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
+//									              public void setValues(PreparedStatement ps) throws SQLException {
+//									            	  ps.setString(1, request.getParameter("user_nik"));
+//									            	  ps.setString(2, request.getParameter("user_hp"));
+//									            	  ps.setString(3, home.getSecure(request.getParameter("user_password")));
+//									            	  ps.setString(4, request.getParameter("user_status"));
+//									            	  ps.setInt(5, (Integer)request.getSession().getAttribute("sessionUserId"));
+//									            	  ps.setString(6, request.getParameter("emp_number"));
+//									              }
+//								    });
+
+				String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_password=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
+				int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setString(1, request.getParameter("user_nik"));
+						ps.setString(2, request.getParameter("user_hp"));
+						ps.setString(3, home.getSecure(request.getParameter("user_password")));
+						ps.setInt(4, (Integer)request.getSession().getAttribute("sessionUserId"));
+						ps.setString(5, request.getParameter("emp_number"));
+					}
+				});
 			
 			     if(rowInsertUser>0) {
 			        	String [] role_id = request.getParameterValues("role_id");
@@ -321,16 +332,26 @@ public class UserDaoImp implements UserDao{
 			     }							
 			}
 		}else {
-	        String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_status=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
-		    int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
-								              public void setValues(PreparedStatement ps) throws SQLException {
-								            	  ps.setString(1, request.getParameter("user_nik"));
-								            	  ps.setString(2, request.getParameter("user_hp"));
-								            	  ps.setString(3, request.getParameter("user_status"));
-								            	  ps.setInt(4, (Integer)request.getSession().getAttribute("sessionUserId"));
-								            	  ps.setString(5, request.getParameter("emp_number"));
-								              }
-							    });
+//	        String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_status=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
+//		    int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
+//								              public void setValues(PreparedStatement ps) throws SQLException {
+//								            	  ps.setString(1, request.getParameter("user_nik"));
+//								            	  ps.setString(2, request.getParameter("user_hp"));
+//								            	  ps.setString(3, request.getParameter("user_status"));
+//								            	  ps.setInt(4, (Integer)request.getSession().getAttribute("sessionUserId"));
+//								            	  ps.setString(5, request.getParameter("emp_number"));
+//								              }
+//							    });
+
+			String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
+			int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, request.getParameter("user_nik"));
+					ps.setString(2, request.getParameter("user_hp"));
+					ps.setInt(3, (Integer)request.getSession().getAttribute("sessionUserId"));
+					ps.setString(4, request.getParameter("emp_number"));
+				}
+			});
 		
 		     if(rowInsertUser>0) {
 		        	String [] role_id = request.getParameterValues("role_id");
@@ -660,16 +681,26 @@ public class UserDaoImp implements UserDao{
 		String status  = "failed";
 		String message = "Terjadi kesalahan sistem";
 		
-        String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_status=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
-	    int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
-							              public void setValues(PreparedStatement ps) throws SQLException {
-							            	  ps.setString(1, request.getParameter("user_nik"));
-							            	  ps.setString(2, request.getParameter("user_hp"));
-							            	  ps.setString(3, request.getParameter("user_status"));
-							            	  ps.setInt(4, (Integer)request.getSession().getAttribute("sessionUserId"));
-							            	  ps.setString(5, request.getParameter("emp_number"));
-							              }
-						    });
+//        String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_status=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
+//	    int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
+//							              public void setValues(PreparedStatement ps) throws SQLException {
+//							            	  ps.setString(1, request.getParameter("user_nik"));
+//							            	  ps.setString(2, request.getParameter("user_hp"));
+//							            	  ps.setString(3, request.getParameter("user_status"));
+//							            	  ps.setInt(4, (Integer)request.getSession().getAttribute("sessionUserId"));
+//							            	  ps.setString(5, request.getParameter("emp_number"));
+//							              }
+//						    });
+
+		String sqlUser = "UPDATE portal.tm_users SET user_nik=?, user_hp=?, user_update=?, last_update=NOW() AT TIME ZONE 'Asia/Jakarta' WHERE user_name=?";
+		int rowInsertUser = portalTemplate.update(sqlUser, new PreparedStatementSetter() {
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, request.getParameter("user_nik"));
+				ps.setString(2, request.getParameter("user_hp"));
+				ps.setInt(3, (Integer)request.getSession().getAttribute("sessionUserId"));
+				ps.setString(4, request.getParameter("emp_number"));
+			}
+		});
 	
 	     if(rowInsertUser>0) {
 				code    = "01";
