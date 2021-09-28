@@ -522,7 +522,7 @@ public class RegisterServiceImp implements RegisterService {
 
 			code = "01";
 			status = "success";
-			message = "<h3 class='blog-blog-details__title text-center'><strong>NIB Sudah Terregistrasi</strong></h3><p class='blog-details__text text-center'>Silakan login ke sistem.</p>";
+			message = "<h3 class='blog-blog-details__title text-center'><strong>NIB/NIP sudah terdaftar.</strong></h3><p class='blog-details__text text-center'>Silakan login.</p>";
 
 			return   "{"+
 					"\"code\":\""+code+"\","+
