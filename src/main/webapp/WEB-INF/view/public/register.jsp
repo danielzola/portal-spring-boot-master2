@@ -278,8 +278,8 @@
                                     <label for="inputStatus">Status NIB</label>
                                     <select class="form-control" name="status_nib" id="inputStatus" required>
                                         <option value="">- Pilih Status NIB -</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Tidak Aktif">Tidak Aktif</option>
+                                        <option value="01">Aktif</option>
+                                        <option value="02">Tidak Aktif</option>
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
