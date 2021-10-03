@@ -73,7 +73,7 @@
                             <p class="banner-one__text title-only-mobile" style="line-height:15px; margin-top:-10px;">
                             	<span style="font-size:23px;">Direktorat Jenderal Perhubungan Laut</span>
                             </p>
-                            <div class="title-only-mobile"><a href="${urls}" class="banner-one__btn thm-btn">LOGIN APLIKASI</a></div>
+                            <div class="title-only-mobile"><a href="https://sehatitest.hubla.dephub.go.id/signin/oauth2/authorization/wso2" class="banner-one__btn thm-btn">LOGIN APLIKASI</a></div>
                         </div>
                     </div>
                 </div>

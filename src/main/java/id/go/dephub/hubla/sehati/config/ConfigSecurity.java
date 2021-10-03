@@ -16,7 +16,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
        http.authorizeRequests()
        		   .antMatchers("/portal", "/assets/**", "/map", "/gis/**", "/files/upload/verifypdf",
        				   		"/files/preview/verifypdf/**", "/verifysign", "/register", "/activate/*",
-       				   		"/activate", "/forgotpass", "/resetpass", "/resetpass/*","/token/*")
+       				   		"/activate", "/forgotpass", "/resetpass", "/resetpass/*","/token/*","/esign/doc/form/18")
                .permitAll()
                .anyRequest()
                .authenticated()
